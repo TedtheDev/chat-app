@@ -13,7 +13,6 @@ const pool = new Pool({
     password: DB_PASS,
     database: DB_NAME,
     port: DB_PORT,
-    // connectionString: 'postgres://postgres:pass@192.168.99.100:5432/postgres'
 });
 
 const connection =  () => {
@@ -28,4 +27,9 @@ const connection =  () => {
     });
 }
 
-module.exports = connection;
+const connectionObj = {
+    connection,
+    pool
+};
+
+module.exports = connectionObj;

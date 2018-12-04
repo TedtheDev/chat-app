@@ -4,6 +4,8 @@ const cors = require('cors');
 const expressGraphQL = require('express-graphql');
 const bodyParser = require('body-parser');
 const Database = require('./database/index');
+const morgan = require('morgan');
+const schema = require('./graphql/index');
 
 Database.connection()
     .then( () => {
@@ -18,14 +20,16 @@ const app = express();
 
 const PORT = process.env.SERVER_PORT || 3001;
 
-// app.use('/graphql',
-//     cors(),
-//     bodyParser.json(),
-//     expressGraphQL({
-//         schema,
-//         graphiql: true
-//     })
-// );
+app.use(morgan());
+
+app.use('/graphql',
+    cors(),
+    bodyParser.json(),
+    expressGraphQL({
+        schema,
+        graphiql: true
+    })
+);
 
 app.get('/', (req, res) => {
     res.json({hi: 'hello'});

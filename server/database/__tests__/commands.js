@@ -1,6 +1,6 @@
 const commands = require('../commands');
 
-describe('Database Commands', () => {
+describe('Database CRUD Commands', () => {
 
     test('hello world', () => {
         expect('hello world').toMatch('hello world')

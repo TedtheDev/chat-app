@@ -1,5 +1,6 @@
 const { pool } = require('./connection');
 
+//TODO: break these builders into utilities
 const fieldBuilder = (fields) => {
     let fieldString = '';
 
@@ -33,7 +34,8 @@ const parametersBuilder = (parametersObj) => {
     const parametersObjKeys = Object.keys(parametersObj);
 
     for(let i = 0; i < parametersObjKeys.length; i++) {
-        parametersString += `${parametersObjKeys[i]} = '${parametersObj[parametersObjKeys[i]]}'`;
+        //TODO: clean this long line up
+        parametersString += `${parametersObjKeys[i]} = ${typeof parametersObj[parametersObjKeys[i]] !== 'number' ? `'${parametersObj[parametersObjKeys[i]]}'` : `${parametersObj[parametersObjKeys[i]]}`}`;
 
         if(i < parametersObjKeys.length - 1) {
             parametersString += ' AND '
@@ -45,9 +47,8 @@ const parametersBuilder = (parametersObj) => {
 
 const select = (fields = ['*'], table, parameters = {}) => {
     // TODO: add if no tables then throw promise reject?
-    const whereClause = Object.keys(parameters).length > 0 ? `WHERE ${parametersBuilder(parameters)}` : '';
-    const query = `SELECT ${fieldBuilder(fields)} FROM ${table} ${whereClause}`;
-
+    const whereClause = Object.keys(parameters).length > 0 ? ` WHERE ${parametersBuilder(parameters)}` : '';
+    const query = `SELECT ${fieldBuilder(fields)} FROM ${table}${whereClause}`;
     return pool.query(query);
 }
 

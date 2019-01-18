@@ -20,14 +20,21 @@ const valuesBuilder = (values) => {
 
     for( let i = 0; i < values.length; i++) {
         if(values.length - 1 > i) {
-            valuesString += `'${values[i]}', `;
+            valuesString += `${isNumber(values[i])}, `;
         } else {
-            valuesString += `'${values[i]}'`;
+            valuesString += `${isNumber(values[i])}`;
         }
     }
 
     return valuesString;
 };
+
+const isNumber = (value) => {
+    if(typeof value === 'number') {
+        return `${Number(value)}`;
+    }
+    return `'${value}'`;
+}
 
 const parametersBuilder = (parametersObj) => {
     let parametersString = '';
@@ -52,13 +59,16 @@ const select = (fields = ['*'], table, parameters = {}) => {
     return pool.query(query);
 }
 
-const insert = (fields = [], values = [], table) => {
-    const query = `INSERT INTO ${table}(${fieldBuilder(fields)}) VALUES (${valuesBuilder(values)})`;
+const insert = (table, fields = [], values = []) => {
+    if(fields.length !== values.length) {
+        throw new Error('Insert Command Error: fields and values do not contain the same amount of entries');
+    }
+
+    const query = `INSERT INTO ${table} (${fieldBuilder(fields)}) VALUES (${valuesBuilder(values)})`;
     return pool.query(query);
 }
 
 const remove = (table, parametersObj = {}) => {
-
     // TODO: throw resolve but with a field with error?
     if(!parametersObj || Object.keys(parametersObj).length === 0) {
         return new Promise(reject => reject({err: 'missing parameters for deletion'}));

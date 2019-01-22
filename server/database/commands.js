@@ -71,7 +71,7 @@ const insert = (table, fields = [], values = []) => {
 const remove = (table, parametersObj = {}) => {
     // TODO: throw resolve but with a field with error?
     if(!parametersObj || Object.keys(parametersObj).length === 0) {
-        return new Promise(reject => reject({err: 'missing parameters for deletion'}));
+        return new Promise((resolve,reject) => reject({err: 'missing parameters for deletion'}));
     }
 
     const parsedParameters = parametersBuilder(parametersObj);
@@ -85,11 +85,11 @@ const update = (table, valuesObj ={}, parametersObj = {}) => {
 
     // TODO: throw resolve but with a field with error?
     if(!parametersObj || Object.keys(parametersObj).length === 0) {
-        return new Promise(reject => reject({err: 'missing parameters for update'}));
+        return new Promise((resolve,reject) => reject({err: 'missing parameters for update'}));
     }
     
     if(!valuesObj || Object.keys(valuesObj).length === 0) {
-        return new Promise(reject => reject({err: 'missing values for update'}));
+        return new Promise((resolve, reject) => reject({err: 'missing values for update'}));
     }
 
     const parsedParameters = parametersBuilder(parametersObj);

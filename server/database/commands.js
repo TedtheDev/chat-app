@@ -52,7 +52,7 @@ const parametersBuilder = (parametersObj) => {
     return parametersString;
 }
 
-const select = (fields = ['*'], table, parameters = {}) => {
+const select = (table, fields = ['*'], parameters = {}) => {
     // TODO: add if no tables then throw promise reject?
     const whereClause = Object.keys(parameters).length > 0 ? ` WHERE ${parametersBuilder(parameters)}` : '';
     const query = `SELECT ${fieldBuilder(fields)} FROM ${table}${whereClause}`;
@@ -96,7 +96,6 @@ const update = (table, valuesObj ={}, parametersObj = {}) => {
     const parsedValues = parametersBuilder(valuesObj);
 
     const query = `UPDATE ${table} SET ${parsedValues} WHERE ${parsedParameters}`;
-    console.log(query)
     return pool.query(query);
 }
 

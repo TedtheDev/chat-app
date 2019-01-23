@@ -6,15 +6,11 @@ describe('Database CRUD Commands', () => {
 
     describe('SELECT', () => {
 
-        test('hello world', () => {
-            expect('hello world').toMatch('hello world')
-        });
-
         test('select `*` from `aTable', () => {
             
             const expected = 'SELECT * FROM aTable';
 
-            const results = commands.select(['*'], 'aTable');
+            const results = commands.select('aTable', ['*']);
 
             expect(results).toBe(expected);
         });
@@ -23,7 +19,7 @@ describe('Database CRUD Commands', () => {
             
             const expected = "SELECT customerId, customerName FROM aTable";
 
-            const results = commands.select(['customerId', 'customerName'], 'aTable');
+            const results = commands.select('aTable', ['customerId', 'customerName']);
 
             expect(results).toBe(expected);
         });
@@ -32,7 +28,7 @@ describe('Database CRUD Commands', () => {
             
             const expected = "SELECT * FROM aTable WHERE customerName = 'Frank'";
 
-            const results = commands.select(['*'], 'aTable', {customerName: 'Frank'});
+            const results = commands.select('aTable', ['*'], {customerName: 'Frank'});
 
             expect(results).toBe(expected);
         });
@@ -41,7 +37,7 @@ describe('Database CRUD Commands', () => {
             
             const expected = "SELECT * FROM aTable WHERE customerName = 'Frank' AND phoneNumber = '123456'";
 
-            const results = commands.select(['*'], 'aTable', {customerName: 'Frank', phoneNumber: '123456'});
+            const results = commands.select('aTable', ['*'], {customerName: 'Frank', phoneNumber: '123456'});
 
             expect(results).toBe(expected);
         });
@@ -50,14 +46,14 @@ describe('Database CRUD Commands', () => {
             
             const expected = "SELECT * FROM aTable WHERE customerId = 1 AND phoneNumber = '123456'";
 
-            const results = commands.select(['*'], 'aTable', {customerId: 1, phoneNumber: '123456'});
+            const results = commands.select('aTable', ['*'], {customerId: 1, phoneNumber: '123456'});
 
             expect(results).toBe(expected);
         });
 
     })
     
-    describe('insert', () => {
+    describe('INSERT', () => {
 
         test('INSERT into `aTable with one value and one value ', () => {
         
@@ -97,7 +93,7 @@ describe('Database CRUD Commands', () => {
 
     })
     
-    describe('Remove aka DELETE', () => {
+    describe('REMOVE aka DELETE', () => {
 
         test('DELETE FROM `aTable` with a paramters', () => {
             const expected = "DELETE FROM aTable WHERE field1 = 'aValue'";

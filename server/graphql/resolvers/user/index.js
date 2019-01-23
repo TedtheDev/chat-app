@@ -3,18 +3,11 @@ const { generatePasswordHash, comparePasswords } = require('../../../utils/passw
 
 module.exports =  {
   Query: {
-    user: (root, args) => {
+    user: (root, args = {}) => {
         const fields = ['id', 'username', 'password', 'email'];
-        return DB.select(fields, 'users', args)
+        return DB.select( 'users', fields, args)
             .then((results) => {
                 return results.rows;
-            })
-            .catch(err => err);
-    },
-    users: () => {
-        return DB.select(['id', 'username', 'email'], 'users')
-            .then((results) => {
-                return results.rows
             })
             .catch(err => err);
     }

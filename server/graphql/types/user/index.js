@@ -7,8 +7,7 @@ module.exports = `
     }
 
     type Query {
-        user(id: String, username: String, email: String): [User]
-        users: [User]
+        user(id: String, username: String, password: String, email: String): [User]
     }
 
     type Mutation {

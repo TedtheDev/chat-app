@@ -96,7 +96,7 @@ const update = (table, valuesObj ={}, parametersObj = {}) => {
     const parsedValues = parametersBuilder(valuesObj);
 
     const query = `UPDATE ${table} SET ${parsedValues} WHERE ${parsedParameters}`;
-
+    console.log(query)
     return pool.query(query);
 }
 

@@ -13,7 +13,7 @@ module.exports = `
 
     type Mutation {
         addUser(username: String!, password: String!, email: String!): String
-        editUser(id: String!, username: String, password: String, email: String): User
-        deleteUser(id: String!): User
+        editUser(id: String!, username: String, password: String, email: String): String
+        deleteUser(id: String!): String
     }
 `;

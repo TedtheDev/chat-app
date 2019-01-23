@@ -33,6 +33,23 @@ module.exports =  {
                     })
             })
             .catch((err) => err);
+    },
+    editUser: (root, {id, ...args}) => {
+        console.log(args)
+        return DB.update(
+            'users',
+            {...args},
+            {id}
+        )
+        .then((results) => {
+            return results;
+        })
+    },
+    deleteUser: (root, {id}) => {
+        return DB.remove('users', {id})
+            .then(()=> {
+                return `User with id: ${id} was deleted.`
+            })
     }
   }
 };

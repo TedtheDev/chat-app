@@ -26,7 +26,7 @@ describe('Database CRUD Commands', () => {
 
         test('select `*` from `aTable with a parameter', () => {
             
-            const expected = "SELECT * FROM aTable WHERE customerName = 'Frank'";
+            const expected = "SELECT * FROM aTable WHERE (customerName = 'Frank')";
 
             const results = commands.select('aTable', ['*'], {customerName: 'Frank'});
 
@@ -35,7 +35,7 @@ describe('Database CRUD Commands', () => {
 
         test('select `*` from `aTable with multiple parameters', () => {
             
-            const expected = "SELECT * FROM aTable WHERE customerName = 'Frank' AND phoneNumber = '123456'";
+            const expected = "SELECT * FROM aTable WHERE (customerName = 'Frank') AND (phoneNumber = '123456')";
 
             const results = commands.select('aTable', ['*'], {customerName: 'Frank', phoneNumber: '123456'});
 
@@ -44,7 +44,7 @@ describe('Database CRUD Commands', () => {
         
         test('select `*` from `aTable with multiple parameters with a number and a string', () => {
             
-            const expected = "SELECT * FROM aTable WHERE customerId = 1 AND phoneNumber = '123456'";
+            const expected = "SELECT * FROM aTable WHERE (customerId = 1) AND (phoneNumber = '123456')";
 
             const results = commands.select('aTable', ['*'], {customerId: 1, phoneNumber: '123456'});
 
@@ -59,7 +59,7 @@ describe('Database CRUD Commands', () => {
         
             const expected = "INSERT INTO aTable (field1) VALUES ('value1')";
     
-            const results = commands.insert('aTable', ['field1'], ['value1']);
+            const results = commands.insert('aTable', {field1: 'value1'});
     
             expect(results).toBe(expected);
         });
@@ -68,7 +68,7 @@ describe('Database CRUD Commands', () => {
         
             const expected = "INSERT INTO aTable (field1, field2) VALUES ('value1', 'value2')";
     
-            const results = commands.insert('aTable', ['field1', 'field2'], ['value1', 'value2']);
+            const results = commands.insert('aTable', {field1: 'value1', field2: 'value2'});
     
             expect(results).toBe(expected);
         });
@@ -77,7 +77,7 @@ describe('Database CRUD Commands', () => {
         
             const expected = "INSERT INTO aTable (field1, field2) VALUES ('value1', 'value2')";
     
-            const results = commands.insert('aTable', ['field1', 'field2'], ['value1', 'value2']);
+            const results = commands.insert('aTable', {field1: 'value1', field2: 'value2'});
     
             expect(results).toBe(expected);
         });
@@ -86,7 +86,7 @@ describe('Database CRUD Commands', () => {
         
             const expected = "INSERT INTO aTable (field1) VALUES (1)";
     
-            const results = commands.insert('aTable', ['field1'], [1]);
+            const results = commands.insert('aTable', {field1: 1});
     
             expect(results).toBe(expected);
         });
@@ -96,7 +96,7 @@ describe('Database CRUD Commands', () => {
     describe('REMOVE aka DELETE', () => {
 
         test('DELETE FROM `aTable` with a paramters', () => {
-            const expected = "DELETE FROM aTable WHERE field1 = 'aValue'";
+            const expected = "DELETE FROM aTable WHERE (field1 = 'aValue')";
 
             const results = commands.remove('aTable', {field1: 'aValue'});
 
@@ -108,7 +108,7 @@ describe('Database CRUD Commands', () => {
     describe('UPDATE', () => {
 
         test('UPDATE `aTable` with a field with a value', () => {
-            const expected = "UPDATE aTable SET field1 = 'newValue' WHERE field1 = 'oldValue'";
+            const expected = "UPDATE aTable SET field1 = 'newValue' WHERE (field1 = 'oldValue')";
 
             const results = commands.update('aTable', {field1: 'newValue'}, {field1: 'oldValue'})
 

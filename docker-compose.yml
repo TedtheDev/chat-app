@@ -1,8 +1,47 @@
 version: '3'
 services:
-  server:
-    build: ./server/.
+  chat-app-api:
+    image: tedthedev/chat-app-api
+    build:
+      context: ./server
+    # ports:
+    #  - "3000:3000"
+    environment:
+      - SERVER_PORT=3000
+    depends_on:
+      - chat-app-postgres
+      - chat-app-redis
+    # networks:
+    #   - nginx-proxy
+  chat-app-redis:
+    image: "redis:alpine"
+  chat-app-postgres:
+    image: postgres:latest
+    environment:
+      - DB_HOST=${DB_HOST}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+      - DB_NAME=${DB_NAME}
+      - DB_PORT=${DB_PORT}
+    volumes:
+      - /var/lib/postgresql/data
+    # networks:
+    #   - nginx-proxy
     ports:
-     - "3001:3001"
-  # redis:
-    # image: "redis:alpine"
+      - "5432:5432"
+  chat-app-nginx:
+    image: nginx:latest
+    # networks:
+    #   - nginx-proxy
+    ports:
+      - "8080:8080"
+    volumes:
+      - "/chat-app/nginx/default.conf:/etc/nginx/conf.d/default.conf"
+    depends_on:
+    - chat-app-api
+# networks:
+#   nginx-proxy:
+#     external:
+#       name: nginx-proxy
+#   back:
+#     driver: bridge

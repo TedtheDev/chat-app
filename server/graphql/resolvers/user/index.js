@@ -1,15 +1,30 @@
 const DB = require('../../../database/index');
 const { generatePasswordHash, comparePasswords } = require('../../../utils/password');
+const authentication = require('../../../utils/authentication');
 
 module.exports =  {
   Query: {
-    user: (root, args = {}) => {
-        const fields = ['id', 'username', 'password', 'email'];
-        return DB.select( 'users', fields, args)
+    user: async (root, args = {}, context) => {
+        const token = context.headers.authorization.split('Bearer: ')[1];
+        console.log(token)
+        return authentication.verifyToken(token)
             .then((results) => {
-                return results.rows;
+                if(results.success) {
+                    const fields = ['id', 'username', 'password', 'email'];
+                    return DB.select( 'users', fields, args)
+                        .then((results) => {
+                            console.log(results.rows)
+                            return results.rows;
+                        })
+                        .catch(err => err);
+                }
+
+                return [];
             })
-            .catch(err => err);
+            .catch(err => err)
+    },
+    login: async (root, args = {}, context) => {
+        
     }
   },
   Mutation: { // aaddUser(id: String!, username: String!, password: String!, email: String!): User
@@ -17,12 +32,22 @@ module.exports =  {
         return generatePasswordHash(password)
             .then((passwordHash) => {
                 return DB.insert(
-                        'users',
-                        ['username', 'password', 'email' ],
-                        [username, passwordHash, email]
+                        '"Users"',
+                        { username, password: passwordHash, email }
                     )
-                    .then(() => {
-                        return "User added";
+                    .then((results) => {
+                        if(results.rowCount === 1) {
+                            return DB.select('"Users"', ['id', 'username', 'email'], {username, email});
+                        }
+                        return "User not added";
+                    })
+                    .then((results) => {
+                        const user = results.rows[0];
+                        return authentication.signToken(user)
+                            .then((results) => {
+                                return results.token;
+                            })
+                            .catch(err => err)
                     })
             })
             .catch((err) => err);

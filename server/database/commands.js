@@ -26,7 +26,7 @@ const select = (table, fields = ['*'], parameters = {}) => {
     newfieldBuilder(squelInstance, fields);
     paramBuilder(squelInstance, parameters);
     const newQuery = squelInstance.toString();
-
+    
     return pool.query(newQuery);
 }
 

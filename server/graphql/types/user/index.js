@@ -7,13 +7,13 @@ module.exports = `
     }
 
     type Query {
-        user(id: String, username: String, password: String, email: String): [User]
-        login(username: String!, password: String!): String
+        users(id: String, username: String, password: String, email: String): [User]
+        authenticate(email: String!, password: String!): String
     }
 
     type Mutation {
-        addUser(username: String!, password: String!, email: String!): String
-        editUser(id: String!, username: String, password: String, email: String): String
-        deleteUser(id: String!): String
+        addUser(username: String!, password: String!, email: String!): User
+        editUser(id: String!, username: String, password: String, email: String): User
+        deleteUser(id: String!): User
     }
 `;

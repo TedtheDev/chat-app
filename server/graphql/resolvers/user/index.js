@@ -4,14 +4,14 @@ const authentication = require('../../../utils/authentication');
 
 module.exports =  {
   Query: {
-    user: async (root, args = {}, context) => {
+    users: async (root, args = {}, context) => {
         const token = context.headers.authorization.split('Bearer: ')[1];
         console.log(token)
         return authentication.verifyToken(token)
             .then((results) => {
                 if(results.success) {
                     const fields = ['id', 'username', 'password', 'email'];
-                    return DB.select( 'users', fields, args)
+                    return DB.select( '"Users"', fields, args)
                         .then((results) => {
                             console.log(results.rows)
                             return results.rows;
@@ -23,8 +23,25 @@ module.exports =  {
             })
             .catch(err => err)
     },
-    login: async (root, args = {}, context) => {
-        
+    authenticate: (root, {email, password}, context) => {
+        return DB.select( '"Users"', ['username','password','email'], { email })
+            .then((results) => {
+                if(results.rowCount == 1){
+                    const user = results.rows[0];
+                    return comparePasswords(password, user.password)
+                        .then((match) => {
+                            if(match){
+                                return authentication.signToken(user)
+                                .then((results) => {
+                                    return results.token;
+                                })
+                                .catch(err => err)
+                            }
+                        })
+                        .catch( err => err )
+                }
+            })
+            .catch( err => err)
     }
   },
   Mutation: { // aaddUser(id: String!, username: String!, password: String!, email: String!): User

@@ -23,7 +23,7 @@ module.exports =  {
             })
             .catch(err => err)
     },
-    authenticate: (root, {email, password}, context) => {
+    token: (root, {email, password}, context) => {
         return DB.select( '"Users"', ['username','password','email'], { email })
             .then((results) => {
                 if(results.rowCount == 1){

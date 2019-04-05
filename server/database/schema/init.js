@@ -7,17 +7,25 @@ const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, proces
 
 const User = require('./user')(sequelize);
 
-sequelize
+const initializeDatabase = () => {
+  sequelize
   .authenticate()
   .then(() => {
     console.log('Connection has been established successfully.');
     User.sync()
         .then(() => {
             console.log('User Table Synced');
+            sequelize.close();
         });
-    sequelize.close();
   })
   .catch(err => {
     console.error('Unable to connect to the database:', err);
     sequelize.close();
   });
+}
+
+const dbApi = {
+  init: initializeDatabase
+}
+
+module.exports = dbApi;

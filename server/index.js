@@ -8,13 +8,14 @@ const morgan = require('morgan');
 const schema = require('./graphql/index');
 
 Database.connection()
-.then( () => {
-    console.log(`Database connected!`)
-})
-.catch(err =>  {
-    console.log(`Database connection error: ${err}`);
-    process.exit(1);
-});
+    .then( () => {
+        console.log(`Database connected!`);
+        Database.initTables();
+    })
+    .catch(err =>  {
+        console.log(`Database connection error: ${err}`);
+        process.exit(1);
+    });
 
 const app = express();
 

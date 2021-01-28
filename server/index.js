@@ -1,15 +1,17 @@
 require('dotenv').config({ path: __dirname + '/.env' });
 const express = require('express');
 const cors = require('cors');
-const expressGraphQL = require('express-graphql');
+const { graphqlHTTP } = require('express-graphql');
 const bodyParser = require('body-parser');
 const Database = require('./database/index');
 const morgan = require('morgan');
 const schema = require('./graphql/index');
 
+console.log(process.env)
 Database.connection()
     .then( () => {
-        console.log(`Database connected!`)
+        console.log(`Database connected!`);
+        Database.initTables();
     })
     .catch(err =>  {
         console.log(`Database connection error: ${err}`);
@@ -25,7 +27,7 @@ app.use(morgan());
 app.use('/graphql',
     cors(),
     bodyParser.json(),
-    expressGraphQL({
+    graphqlHTTP({
         schema,
         graphiql: true
     })

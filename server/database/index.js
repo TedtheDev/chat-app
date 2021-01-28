@@ -4,6 +4,7 @@ const { select,
     remove,
     update
 } = require('./commands');
+const schema = require('./schema/init');
 
 const Database = {
     connection,
@@ -11,7 +12,8 @@ const Database = {
     select,
     insert,
     remove,
-    update
+    update,
+    initTables: schema.init
 }
 
 module.exports = Database;

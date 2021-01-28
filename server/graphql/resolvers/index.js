@@ -1,22 +1,7 @@
-const DB = require('../../database/index');
+const { mergeResolvers } =  require("merge-graphql-schemas");
 
-module.exports =  {
-  Query: {
-    user: (root, args) => {
-        console.log('args',{args})
-        const fields = ['id', 'username', 'email']
-        return DB.select(fields, 'users', args)
-            .then((results) => {
-                return results.rows[0];
-            })
-            .catch(err => err);
-    },
-    users: () => {
-        return DB.select(['id', 'username', 'email'], 'users')
-            .then((results) => {
-                return results.rows
-            })
-            .catch(err => err);
-    }
-  }
-};
+const User = require("./user/index");
+
+const resolvers = [User];
+
+module.exports = mergeResolvers(resolvers);

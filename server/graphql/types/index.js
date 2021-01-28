@@ -1,7 +1,7 @@
-const { mergeTypes } = require('merge-graphql-schemas');
+const { mergeTypeDefs  } = require('graphql-tools');
 const User = require('./user/index');
 const Error = require('./error/index');
 
 const typeDefs = [User, Error];
 
-module.exports = mergeTypes(typeDefs, { all: true });
+module.exports = mergeTypeDefs(typeDefs, { all: true });

@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
-    "start": "node index.js",
+    "start": "nodemon --legacy-watch index.js",
     "test:coverage": "jest --coverage"
   },
   "repository": {
@@ -25,24 +25,25 @@
   "homepage": "https://github.com/TedtheDev/chat-app#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "body-parser": "^1.18.3",
+    "body-parser": "^1.19.0",
     "cors": "^2.8.5",
-    "dotenv": "^6.1.0",
-    "express": "^4.16.4",
-    "express-graphql": "^0.7.1",
-    "graphql": "^14.0.2",
-    "graphql-tools": "^4.0.3",
-    "jsonwebtoken": "^8.4.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-graphql": "^0.12.0",
+    "graphql": "^15.5.0",
+    "graphql-tools": "^7.0.2",
+    "jsonwebtoken": "^8.5.1",
     "merge-graphql-schemas": "^1.5.8",
-    "morgan": "^1.9.1",
-    "pg": "^7.6.1",
-    "pg-hstore": "^2.3.2",
-    "sequelize": "^5.2.10",
+    "morgan": "^1.10.0",
+    "pg": "^8.5.1",
+    "pg-hstore": "^2.3.3",
+    "sequelize": "^6.5.0",
     "squel": "^5.12.2"
   },
   "devDependencies": {
-    "jest": "^24.5.0",
-    "jest-cli": "^24.5.0"
+    "jest": "^26.6.3",
+    "jest-cli": "^26.6.3",
+    "nodemon": "^2.0.7"
   },
   "jest": {
     "collectCoverage": true,

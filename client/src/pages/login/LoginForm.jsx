@@ -16,11 +16,41 @@ const Div = styled.div`
     ". . .";
 `;
 
+
+const StyledTextField = styled(TextField)`
+    margin-bottom: 1rem;
+`;
+
+const EmailTextField = styled(StyledTextField)`
+    grid-area: email;
+`;
+
+const PasswordTextField = styled(StyledTextField)`
+    grid-area: password;
+`;
+
+const StyledButton = styled(Button)`
+    min-width: 2rem;
+    max-width: 8rem;
+`;
+
+const CreateAccountButton = styled(StyledButton)`
+    grid-area: createAccount;
+`;
+
+const LoginButton = styled(StyledButton)`
+    grid-area: login;
+`;
+
 const Form = styled.form`
   grid-area: loginForm;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
+  display: grid;
+  grid-template-rows: repeat(3, minmax(4rem, min-content));
+  grid-template-columns: repeat(2, minmax(10rem, min-content));
+  grid-template-areas: 
+    "email email"
+    "password password"
+    "login createAccount";
 `;
 
 const LoginForm = ({handleLogin}) => {
@@ -44,7 +74,7 @@ const LoginForm = ({handleLogin}) => {
     return (
         <Div>
             <Form onSubmit={validateForm}>
-                <TextField
+                <EmailTextField
                     value={email}
                     onChange={(event) => setEmail(event.target.value)}
                     type="email"
@@ -52,20 +82,27 @@ const LoginForm = ({handleLogin}) => {
                     variant="outlined"
                     error={isValidEmail}
                 />
-                <TextField
+                <PasswordTextField
                     value={password}
                     onChange={(event) => setPassword(event.target.value)}
                     type="password"
                     label="Password"
                     variant="outlined"
                 />
-                <Button
+                <LoginButton
                     type="submit"
                     variant="contained"
                     color="primary"
                 >
                     Login
-                </Button>
+                </LoginButton>
+                <CreateAccountButton
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                >
+                    Create Account
+                </CreateAccountButton>
             </Form>
         </Div>
     );

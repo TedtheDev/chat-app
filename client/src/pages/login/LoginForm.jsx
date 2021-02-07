@@ -5,18 +5,6 @@ import styled from 'styled-components';
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 
-const Div = styled.div`
-  height: 100%;
-  display: grid;
-  grid-template-columns: 1fr 5fr 1fr;
-  grid-template-rows: 1fr auto 1fr;
-  grid-template-areas:
-    ". . ."
-    ". loginForm ."
-    ". . .";
-`;
-
-
 const StyledTextField = styled(TextField)`
     margin-bottom: 1rem;
 `;
@@ -72,7 +60,7 @@ const LoginForm = ({handleLogin}) => {
     }
 
     return (
-        <Div>
+        <>
             <Form onSubmit={validateForm}>
                 <EmailTextField
                     value={email}
@@ -100,11 +88,12 @@ const LoginForm = ({handleLogin}) => {
                     type="submit"
                     variant="contained"
                     color="primary"
-                >
+                    >
                     Create Account
                 </CreateAccountButton>
             </Form>
-        </Div>
+            
+        </>
     );
 };
 

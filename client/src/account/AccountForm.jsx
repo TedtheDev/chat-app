@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import useCreateAccountForm from './hooks/createAccountForm';
+import useCreateAccountForm from './hooks/create-account-form';
 
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -17,7 +17,7 @@ const ErrorMessage = styled.span`
 
 const AccountForm = ({gridArea}) => {
     const { inputs, handleInputChange, handleSubmit } = useCreateAccountForm(() => {});
-    
+
     return (
         <>
             <Form gridArea={gridArea} onSubmit={handleSubmit} >

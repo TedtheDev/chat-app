@@ -6,7 +6,8 @@ import { StylesProvider } from '@material-ui/core/styles';
 
 import rootReducer from './reducers/index';
 
-import Login from "./pages/Login";
+import Login from "./login/Login";
+import Account from './account/Account';
 
 const store = configureStore(rootReducer)
 const App = () => {
@@ -17,14 +18,14 @@ const App = () => {
       <Provider store={store}>
           <Router>
             <Switch>
-              <Route path="/">
-                <Login />
-              </Route>
-              <Route path="/home">
+              <Route exact path="/home">
                 <div>Home</div>
               </Route>
-              <Route path="/account">
-                <div>Account</div>
+              <Route exact path="/account">
+                <Account />♣
+              </Route>
+              <Route exact path="/">
+                <Login />
               </Route>
             </Switch>
           </Router>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import TextField from "@material-ui/core/TextField";
@@ -20,6 +21,7 @@ const PasswordTextField = styled(StyledTextField)`
 const StyledButton = styled(Button)`
     min-width: 2rem;
     max-width: 8rem;
+    height: 3rem;
 `;
 
 const CreateAccountButton = styled(StyledButton)`
@@ -28,40 +30,53 @@ const CreateAccountButton = styled(StyledButton)`
 
 const LoginButton = styled(StyledButton)`
     grid-area: login;
+    height: 3rem;
 `;
 
 const Form = styled.form`
-  grid-area: loginForm;
-  display: grid;
-  grid-template-rows: repeat(3, minmax(4rem, min-content));
-  grid-template-columns: repeat(2, minmax(10rem, min-content));
-  grid-template-areas: 
-    "email email"
-    "password password"
-    "login createAccount";
+    grid-area: ${({gridArea}) => gridArea};
+    display: grid;
+    grid-template-rows: repeat(3, minmax(4rem, min-content));
+    grid-template-columns: repeat(2, minmax(10rem, min-content));
+    grid-template-areas: 
+        "email email"
+        "password password"
+        "login createAccount";
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 1rem;
 `;
 
-const LoginForm = ({handleLogin}) => {
+const LoginForm = ({handleLogin, gridArea}) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [isValidEmail, setIsValidEmail] = useState(false);
 
-    const validateForm = (event) => {
-        event.preventDefault();
+    const validateForm = () => {
         if (!email.includes("@")) {
             setIsValidEmail(true);
+            return true;
         } else {
             setIsValidEmail(false);
+            return false;
         }
 
-        if(email && password){
-            handleLogin({email, password});
-        }
+        
     }
 
+    const handleSubmit = (event) => {
+        event.preventDefault();
+
+        const valid = validateForm(event);
+
+        if(valid){
+            handleLogin({email, password});
+        }
+
+    }
     return (
         <>
-            <Form onSubmit={validateForm}>
+            <Form gridArea={gridArea} onSubmit={handleSubmit}>
                 <EmailTextField
                     value={email}
                     onChange={(event) => setEmail(event.target.value)}
@@ -84,13 +99,14 @@ const LoginForm = ({handleLogin}) => {
                 >
                     Login
                 </LoginButton>
-                <CreateAccountButton
-                    type="submit"
+                <Link
+                    to="/account"
+                    component={CreateAccountButton}
                     variant="contained"
                     color="primary"
-                    >
+                >
                     Create Account
-                </CreateAccountButton>
+                </Link>
             </Form>
             
         </>
@@ -99,6 +115,7 @@ const LoginForm = ({handleLogin}) => {
 
 LoginForm.propTypes = {
     handleLogin: PropTypes.func,
+    gridArea: PropTypes.string,
 };
 
 export default LoginForm;

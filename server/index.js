@@ -7,7 +7,6 @@ const Database = require('./database/index');
 const morgan = require('morgan');
 const schema = require('./graphql/index');
 
-console.log(process.env)
 Database.connection()
     .then( () => {
         console.log(`Database connected!`);

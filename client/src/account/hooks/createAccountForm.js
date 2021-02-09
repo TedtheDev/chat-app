@@ -40,7 +40,7 @@ const useCreateAccountForm = (callback) => {
             event.preventDefault();
         }
 
-        callback();
+        callback && callback();
     }
 
     return {

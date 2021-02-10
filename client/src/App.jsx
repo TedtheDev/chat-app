@@ -6,10 +6,14 @@ import { StylesProvider } from '@material-ui/core/styles';
 
 import rootReducer from './reducers/index';
 
+import ProtectedRoute from './components/ProtectedRoute';
+
 import Login from "./login/Login";
 import Account from './account/Account';
+import Home from './home/Home';
 
-const store = configureStore(rootReducer)
+const store = configureStore(rootReducer);
+
 const App = () => {
   // TODO: make login path actually login
   // and home path the root
@@ -18,13 +22,13 @@ const App = () => {
       <Provider store={store}>
           <Router>
             <Switch>
-              <Route exact path="/home">
-                <div>Home</div>
-              </Route>
+              <ProtectedRoute exact path="/">
+                <Home />
+              </ProtectedRoute>
               <Route exact path="/account">
                 <Account />♣
               </Route>
-              <Route exact path="/">
+              <Route exact path="/login">
                 <Login />
               </Route>
             </Switch>

@@ -16,7 +16,12 @@ const ErrorMessage = styled.span`
 `;
 
 const AccountForm = ({gridArea}) => {
-    const { inputs, handleInputChange, handleSubmit } = useCreateAccountForm(() => {});
+    const {
+        inputs,
+        handleInputChange,
+        handleSubmit,
+        errors
+    } = useCreateAccountForm(() => {});
 
     return (
         <>
@@ -32,8 +37,8 @@ const AccountForm = ({gridArea}) => {
                                 variant="outlined"
                                 onChange={handleInputChange}
                                 value={fieldValue.fieldValue}
-                                error={Boolean(fieldValue.error)}
-                                helperText={fieldValue.error && fieldValue.error}
+                                error={Boolean(errors[fieldName])}
+                                helperText={errors[fieldName] && errors[fieldName]}
                             />
                         )
                     })

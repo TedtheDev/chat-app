@@ -29,7 +29,6 @@ jobs:
             echo 'Deploying...'
             echo 'Deployed!'
   frontend-test:
-    working_directory: ~/client
     docker:
       - image: cimg/node:15.8.0
     steps:

@@ -66,9 +66,9 @@ workflows:
         requires:
           - frontend-build
       - frontend-approval:
-         type: approval
-         requires:
-           - frontend-build
-     - frontend-complete:
-         requires:
-           - frontend-approval
+        type: approval
+        requires:
+          - frontend-build
+      - frontend-complete:
+        requires:
+        - frontend-approval

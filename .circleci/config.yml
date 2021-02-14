@@ -1,24 +1,24 @@
 version: 2.1
 jobs:
   frontend-build:
-    working_directory: ~/client
+    working_directory: ~/chat-app
     docker:
       - image: cimg/node:15.8.0
     steps:
       - checkout
       - restore_cache:
           keys:
-            - node-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
+            - node-deps-v1-{{ .Branch }}-{{checksum "./client/package-lock.json"}}
       - run:
           name: install packages
-          command: npm ci
+          command: cd client && npm ci
       - save_cache:
-          key: node-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
+          key: node-deps-v1-{{ .Branch }}-{{checksum "./client/package-lock.json"}}
           paths:
             - ~/.npm
       - run:
           name: Build
-          command: npm run build
+          command: cd client && npm run build
   frontend-deploy:
     docker:
       - image: alpine:3.7

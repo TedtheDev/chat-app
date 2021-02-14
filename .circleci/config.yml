@@ -53,7 +53,7 @@ jobs:
             - ~/.npm
       - run:
           name: Run Tests
-          command: npm run test
+          command: cd client && npm run test
   frontend-complete:
     docker:
       - image: alpine:3.7

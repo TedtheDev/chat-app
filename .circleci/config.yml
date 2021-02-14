@@ -34,10 +34,9 @@ jobs:
       - image: cimg/node:15.8.0
     steps:
       - checkout:
-          path: ./client
+          path: ./chat-app/client
       - run:
-          working_directory: ~/chat-app/client
-          name: cd into client
+          name: check folder path
           command: |
             ls -a
             pwd

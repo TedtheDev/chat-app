@@ -40,6 +40,8 @@ jobs:
           command: |
             ls -a
             pwd
+            cd client
+            ls -a
       - restore_cache:
           keys:
             - node-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}

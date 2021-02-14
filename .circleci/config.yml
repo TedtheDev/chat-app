@@ -35,23 +35,22 @@ jobs:
     steps:
       - checkout
       - run:
-          name: check folders
+          name: cd into client
           command: |
-            ls -a
-            pwd
+            cd client
       - restore_cache:
           keys:
-            - node-deps-v1-{{ .Branch }}-{{checksum "./client/package-lock.json"}}
+            - node-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
       - run:
           name: install packages
           command: npm ci
       - save_cache:
-          key: node-deps-v1-{{ .Branch }}-{{checksum "./client/package-lock.json"}}
+          key: node-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
           paths:
-            - ~/client/.npm
+            - ~/.npm
       - run:
           name: Run Tests
-          command: cd client && npm run test
+          command: npm run test
   frontend-complete:
     docker:
       - image: alpine:3.7

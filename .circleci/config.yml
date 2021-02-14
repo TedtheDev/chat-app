@@ -29,6 +29,7 @@ jobs:
             echo 'Deploying...'
             echo 'Deployed!'
   frontend-test:
+    working_directory: ~/chat-app
     docker:
       - image: cimg/node:15.8.0
     steps:
@@ -40,17 +41,17 @@ jobs:
             pwd
       - restore_cache:
           keys:
-            - node-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
+            - node-deps-v1-{{ .Branch }}-{{checksum "./client/package-lock.json"}}
       - run:
           name: install packages
           command: npm ci
       - save_cache:
-          key: node-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
+          key: node-deps-v1-{{ .Branch }}-{{checksum "./client/package-lock.json"}}
           paths:
-            - ~/.npm
+            - ~/client/.npm
       - run:
           name: Run Tests
-          command: npm run test
+          command: cd client && npm run test
   frontend-complete:
     docker:
       - image: alpine:3.7

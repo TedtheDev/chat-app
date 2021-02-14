@@ -34,6 +34,10 @@ jobs:
       - image: cimg/node:15.8.0
     steps:
       - checkout
+      - run:
+          name: check folders
+          command: |
+            ls -a
       - restore_cache:
           keys:
             - node-deps-v1-{{ .Branch }}-{{checksum "./client/package-lock.json"}}

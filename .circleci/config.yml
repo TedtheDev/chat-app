@@ -33,11 +33,14 @@ jobs:
     docker:
       - image: cimg/node:15.8.0
     steps:
-      - checkout
+      - checkout:
+          path: ./client
       - run:
+          working_directory: ~/chat-app/client
           name: cd into client
           command: |
-            cd client
+            ls -a
+            pwd
       - restore_cache:
           keys:
             - node-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}

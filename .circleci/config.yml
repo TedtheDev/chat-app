@@ -63,19 +63,31 @@ jobs:
           command: |
             echo 'Do work once the approval has completed'
 workflows:
-  build:
+  frontend:
     jobs:
       - frontend-test
       - frontend-build:
           requires:
             - frontend-test
-      - frontend-deploy:
-          requires:
-            - frontend-build
+          filters:
+            branches:
+              only: master
       - frontend-approval:
           type: approval
           requires:
             - frontend-build
+          filters:
+            branches:
+              only: master
+      - frontend-deploy:
+          requires:
+            - frontend-approval
+          filters:
+            branches:
+              only: master
       - frontend-complete:
           requires:
-          - frontend-approval
+          - frontend-deploy
+          filters:
+            branches:
+              only: master

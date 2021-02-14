@@ -33,8 +33,7 @@ jobs:
     docker:
       - image: cimg/node:15.8.0
     steps:
-      - checkout:
-          path: ./client
+      - checkout
       - run:
           name: check folder path
           command: |

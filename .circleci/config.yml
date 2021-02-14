@@ -46,7 +46,7 @@ jobs:
             - node-deps-v1-{{ .Branch }}-{{checksum "./client/package-lock.json"}}
       - run:
           name: install packages
-          command: npm ci
+          command: cd client && npm ci
       - save_cache:
           key: node-deps-v1-{{ .Branch }}-{{checksum "./client/package-lock.json"}}
           paths:

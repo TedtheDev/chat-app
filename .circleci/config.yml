@@ -1,22 +1,74 @@
 version: 2.1
-
-workflows:
-  build:
-    jobs:
-      - build
 jobs:
-  build:
+  frontend-build:
+    working_directory: ~/client
+    docker:
+      - image: cimg/node:15.8.0
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - node-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
+      - run:
+          name: install packages
+          command: npm ci
+      - save_cache:
+          key: node-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
+          paths:
+            - ~/.npm
+      - run:
+          name: Build
+          command: npm run build
+  frontend-deploy:
     docker:
       - image: alpine:3.7
     steps:
+      - run:
+          name: Deploy to GCP
+          command: |
+            echo 'Deploying...'
+            echo 'Deployed!'
+  frontend-test:
+    working_directory: ~/client
+    docker:
+      - image: cimg/node:15.8.0
+    steps:
       - checkout
+      - restore_cache:
+          keys:
+            - node-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
       - run:
-          name: The First Step
-          command: |
-            echo 'Hello World!'
-            echo 'This is the delivery pipeline'
+          name: install packages
+          command: npm ci
+      - save_cache:
+          key: node-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
+          paths:
+            - ~/.npm
       - run:
-          name: Code Has Arrived
+          name: Run Tests
+          command: npm run test
+  frontend-complete:
+    docker:
+      - image: alpine:3.7
+    steps:
+      - run:
+          name: Approval Complete
           command: |
-            ls -al
-            echo '^^^That should look familiar^^^'
+            echo 'Do work once the approval has completed'
+workflows:
+  build:
+    jobs:
+      - frontend-test
+      - frontend-build:
+        requires:
+          - frontend-test
+      - frontend-deploy:
+        requires:
+          - frontend-build
+      - frontend-approval:
+         type: approval
+         requires:
+           - frontend-build
+     - frontend-complete:
+         requires:
+           - frontend-approval

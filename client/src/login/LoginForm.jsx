@@ -39,7 +39,7 @@ const LoadingSpinner = styled(CircularProgress)`
 `;
 
 const Wrapper = styled.div`
-    grid-area: ${({gridArea}) => gridArea};
+    grid-area: ${({gridArea}) => gridArea || ''};
 `;
 
 const Form = styled.form`
@@ -149,7 +149,7 @@ const LoginForm = ({isAuthenticating, errorMessage, handleLogin, gridArea}) => {
 };
 
 LoginForm.propTypes = {
-    isAuthenticating: PropTypes.bool,
+    isAuthenticating: PropTypes.bool.isRequired,
     errorMessage: PropTypes.string,
     handleLogin: PropTypes.func,
     gridArea: PropTypes.string,

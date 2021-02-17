@@ -2,10 +2,16 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import Page from '../Page';
 
+const ChildComponent = () => {
+    return (
+        <div>My Child Component</div>
+    )
+};
+
 describe('Test <Page />', () => {
-    it.skip('renders a child component', () => {
-        render(<Page />);
-        const linkElement = screen.getByText(/learn react/i);
-        expect(linkElement).toBeInTheDocument();
+    it('renders a child component', () => {
+        render(<Page><ChildComponent /></Page>);
+        const childComponentText = screen.getByText('My Child Component');
+        expect(childComponentText).toBeInTheDocument();
       });
 });

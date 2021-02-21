@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { authenticate } from '../auth/auth-ducks';
+import { login } from '../auth/auth-ducks';
 import {
   isAuthenticatingSelector,
   authenticateErrorSelector,
@@ -18,7 +18,7 @@ const Login = () => {
   const authErrorMessage = useSelector(authenticateErrorSelector);
 
   const handleLogin = ({ email, password }) => {
-    dispatch(authenticate(email, password))
+    dispatch(login(email, password))
   };
 
   if(isAuthenticated){

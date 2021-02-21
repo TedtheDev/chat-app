@@ -1,22 +1,22 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Provider } from 'react-redux'
-import configureStore from './utils/configureStore';
+import configureStore from './utils/configure-store';
 import { StylesProvider } from '@material-ui/core/styles';
 
 import rootReducer from './reducers/index';
+import { authenticateOnLoad } from './auth/auth-ducks';
 
 import ProtectedRoute from './components/ProtectedRoute';
-
 import Login from "./login/Login";
 import Account from './account/Account';
 import Home from './home/Home';
 
 const store = configureStore(rootReducer);
 
+store.dispatch(authenticateOnLoad());
+
 const App = () => {
-  // TODO: make login path actually login
-  // and home path the root
   return (
     <StylesProvider injectFirst>
       <Provider store={store}>

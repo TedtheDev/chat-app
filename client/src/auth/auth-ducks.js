@@ -1,4 +1,5 @@
 import axios from 'axios';
+import CookieUtils from '../utils/cookie-utils';
 
 import {
     IS_AUTHENTICATING,
@@ -30,7 +31,25 @@ const authenticateFailure = (errorMessage) => {
     }
 }
 
-export const authenticate = (email, password) => {
+export const authenticateOnLoad = () => {
+    return (dispatch) => {
+        const token = CookieUtils.getCookie('chat-app-token');
+        console.log({token})
+        return axios.post('http://localhost:3001/v1/authenticate/verify', { token })
+            .then((response) => {
+                const { data } = response
+                const { decodedToken } = data;
+
+                dispatch(authenticateSuccess(decodedToken))
+            },
+            () => {
+                CookieUtils.removeCookie('chat-app-token');
+                dispatch(authenticateFailure());
+            });
+    }
+};
+
+export const login = (email, password) => {
     return (dispatch) => {
         dispatch(isAuthenticating());
 
@@ -38,9 +57,11 @@ export const authenticate = (email, password) => {
             .then((response) => {
                 const { data } = response
                 const { token } = data;
+
                 return axios.post('http://localhost:3001/v1/authenticate/verify', { token })
                     .then((response) => {
                         const decodedToken = response?.data;
+                        CookieUtils.setCookie('chat-app-token', token)
                         dispatch(authenticateSuccess(decodedToken));
                     },
                     (error) => {
@@ -51,7 +72,7 @@ export const authenticate = (email, password) => {
             (error) => {
                 const errorMessage = error?.response?.data?.message;
                 dispatch(authenticateFailure(errorMessage));
-            })
+            });
     }
 }
 

@@ -18,13 +18,14 @@ const authenticateSuccess = (authDetails) => {
         type: AUTHENTICATE_SUCCESS,
         authDetails,
         isAuthenticated: true,
+        isAuthenticating: false,
     }
 }
 
-const authenticateFailure = ({error}) => {
+const authenticateFailure = (errorMessage) => {
     return {
         type: AUTHENTICATE_FAILURE,
-        errorMessage: error,
+        errorMessage,
         isAuthenticating: false,
     }
 }
@@ -33,20 +34,23 @@ export const authenticate = (email, password) => {
     return (dispatch) => {
         dispatch(isAuthenticating());
 
-        // return setTimeout(() => {
-        //     // dispatch(authenticateSuccess({userId: 123, username: 'Ted'}));
-
-        //     dispatch(authenticateFailure({error: 'An Error'}));
-        // }, 3000);
-
-        return axios.post('/v1/authenticate', { email, password})
+        return axios.post('http://localhost:3001/v1/authenticate/create', { email, password})
             .then((response) => {
-                const { data } = response;
-
-                dispatch(authenticateSuccess(data));
+                const { data } = response
+                const { token } = data;
+                return axios.post('http://localhost:3001/v1/authenticate/verify', { token })
+                    .then((response) => {
+                        const decodedToken = response?.data;
+                        dispatch(authenticateSuccess(decodedToken));
+                    },
+                    (error) => {
+                        const errorMessage = error?.response?.data?.message;
+                        dispatch(authenticateFailure(errorMessage));
+                    });
             },
             (error) => {
-                dispatch(authenticateFailure(error));
+                const errorMessage = error?.response?.data?.message;
+                dispatch(authenticateFailure(errorMessage));
             })
     }
 }
@@ -56,14 +60,22 @@ const INITIAL_STATE = {
     isAuthenticating: false,
 };
 
-const authentication = (state = INITIAL_STATE, { type, isAuthenticating, authDetails, errorMessage}) => {
+const authentication = (
+    state = INITIAL_STATE,
+    {
+        type,
+        isAuthenticating,
+        isAuthenticated,
+        authDetails,
+        errorMessage
+}) => {
     switch(type){
         case IS_AUTHENTICATING:
             return { ...state, isAuthenticating};
         case AUTHENTICATE_SUCCESS:
-            return { ...state, authDetails, isAuthenticating};
+            return { ...state, authDetails, isAuthenticating, isAuthenticated};
         case AUTHENTICATE_FAILURE:
-            return {...state, errorMessage, isAuthenticating };
+            return {...state, errorMessage, isAuthenticating};
         default:
             return state;
     }

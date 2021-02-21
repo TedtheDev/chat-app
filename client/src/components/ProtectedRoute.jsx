@@ -7,10 +7,10 @@ import {
     isAuthenticatedSelector
 } from '../auth/selectors/auth-selectors';
 
-const ProtectedRoute = ({children,...props}) => {
+const ProtectedRoute = ({children, ...props}) => {
     const isAuthenticated = useSelector(isAuthenticatedSelector);
 
-    if(!isAuthenticated){
+    if(isAuthenticated){
         return (
             <Route {...props}>
                 {children}

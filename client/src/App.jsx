@@ -26,7 +26,7 @@ const App = () => {
                 <Home />
               </ProtectedRoute>
               <Route exact path="/account">
-                <Account />♣
+                <Account />
               </Route>
               <Route exact path="/login">
                 <Login />

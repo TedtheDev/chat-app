@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { debounce } from 'lodash';
 
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
@@ -65,32 +66,59 @@ const ErrorMessage = styled.span`
     color: red;
 `;
 
+const setErrorMessageDebounce = debounce((fn) => fn(), 800);
+
 const LoginForm = ({isAuthenticating, errorMessage, handleLogin, gridArea}) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [isValidEmail, setIsValidEmail] = useState(false);
+    const[ emailError, setEmailError] = useState('');
+    const[ passwordError, setPasswordError] = useState('');
+    const[ isPasswordDirty, setIsPasswordDirty] = useState(false);
 
-    const validateForm = () => {
-        if (email.includes("@")) {
-            setIsValidEmail(true);
-            return true;
-        } else {
-            setIsValidEmail(false);
-            return false;
+    useEffect(() => {
+        let emailErrorMessage = '';
+
+        if(email !== '' && !email.includes('@')){
+            emailErrorMessage = 'Invalid Email'
         }
 
-        
-    }
+        setErrorMessageDebounce(() => {
+            setEmailError(emailErrorMessage);
+        });
+    }, [email]);
+
+    useEffect(() => {
+        let passwordErrorMessage = '';
+
+        if(isPasswordDirty && password === ''){
+            passwordErrorMessage = 'Missing Password'
+        }
+
+        setErrorMessageDebounce(() => {
+            setPasswordError(passwordErrorMessage);
+        });
+    }, [password, isPasswordDirty]);
 
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        const valid = validateForm(event);
+        let emailErrorMessage = '';
+        let passwordErrorMessage = '';
 
-        if(valid){
-            handleLogin({email, password});
+        if(email === ''){
+            emailErrorMessage = 'Missing Email';
         }
 
+        if(password === ''){
+            passwordErrorMessage = 'Missing Password';
+        }
+
+        setEmailError(emailErrorMessage);
+        setPasswordError(passwordErrorMessage);
+
+        if(email !== '' && password !== '' && !emailError && !passwordError){
+            handleLogin({email, password});
+        }
     }
 
     return (
@@ -112,14 +140,20 @@ const LoginForm = ({isAuthenticating, errorMessage, handleLogin, gridArea}) => {
                                     type="email"
                                     label="Email"
                                     variant="outlined"
-                                    error={isValidEmail}
+                                    error={Boolean(emailError && emailError)}
+                                    helperText={emailError}
                                 />
                                 <PasswordTextField
                                     value={password}
-                                    onChange={(event) => setPassword(event.target.value)}
+                                    onChange={(event) => {
+                                        setIsPasswordDirty(true)
+                                        setPassword(event.target.value)
+                                    }}
                                     type="password"
                                     label="Password"
                                     variant="outlined"
+                                    error={Boolean(passwordError && passwordError)}
+                                    helperText={passwordError}
                                 />
                                 <LoginButton
                                     type="submit"
@@ -128,14 +162,15 @@ const LoginForm = ({isAuthenticating, errorMessage, handleLogin, gridArea}) => {
                                 >
                                     Login
                                 </LoginButton>
-                                <Link
+                                
+                                <CreateAccountButton
+                                    component={Link}
                                     to="/account"
-                                    component={CreateAccountButton}
                                     variant="contained"
                                     color="primary"
                                 >
                                     Create Account
-                                </Link>
+                                </CreateAccountButton>
                                 {
                                     errorMessage && (<ErrorMessage>{errorMessage}</ErrorMessage>)
                                 }

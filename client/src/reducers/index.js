@@ -1,13 +1,11 @@
 import { combineReducers } from 'redux'
 
 import authentication from '../auth/auth-ducks';
+import account from '../account/account-ducks';
 
 const rootReducer = combineReducers({
-  // Define a top-level state field named `todos`, handled by `todosReducer`
-//   todos: todosReducer,
-//   filters: filtersReducer
-    test: () => ({}),
     authentication,
+    account,
 });
 
 export default rootReducer;

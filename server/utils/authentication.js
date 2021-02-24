@@ -5,7 +5,7 @@ const signToken = async (info) => {
         if(typeof info !== 'object') {
             reject('parameter info is not of type object');
         }
-        jwt.sign(info, 'shhhhh', (err, token) => {
+        jwt.sign(info, process.env.TOKEN_SECRET, (err, token) => {
             if(err) reject('Error in signToken: cannot sign a token');
             resolve({ token });
         });
@@ -15,7 +15,7 @@ const signToken = async (info) => {
 const verifyToken = async (token) => {
     return new Promise((resolve, reject) => {
         if(typeof token !== 'string') reject('parameter token is not of type string');
-        jwt.verify(token, 'shhhhh', function(err) {
+        jwt.verify(token, process.env.TOKEN_SECRET, function(err) {
             if(err) reject({err, message: 'Error in verifyToken: token can not be verified'})
             resolve({success: true, message: 'User verified'});
         });

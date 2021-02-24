@@ -4,10 +4,11 @@ const cors = require('cors');
 const { graphqlHTTP } = require('express-graphql');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
-const jwt = require('jsonwebtoken');
 
 const Database = require('./database/index');
 const schema = require('./graphql/index');
+
+const Authentication = require('./utils/authentication');
 
 // Database.connection()
 //     .then( () => {
@@ -32,6 +33,9 @@ app.use(cors(corsOptions));
 app.use(morgan());
 app.use(bodyParser.json());
 
+require('./routes')(app);
+
+//TODO: move this into routes folder
 app.use('/graphql',
     graphqlHTTP({
         schema,
@@ -39,51 +43,18 @@ app.use('/graphql',
     })
 );
 
-app.post('/v1/authenticate/create', (req, res) => {
-    const { body = {} } = req;
-    const { email, password } = body;
+//TODO: graphql schema or it's own endpoint?
+app.post('/v1/account/create', async (req, res) => {
+    const { username, email, password } = req.body;
 
-    if(email === 'myemail@email.com' && password === 'mypass'){
-        // userId
-        jwt.sign({ email }, process.env.TOKEN_SECRET, function(error, token) {
-            if(error){
-                res.status(401).json({
-                    error,
-                    message: 'Unable to sign token',
-                })
-            }
-
-            res.status(201).json({
-                token,
-            })
-        });
-    } else {
-        res.status(401).json({
-            message: 'Invalid Credentials'
-        })
+    // do stuff
+    try{
+        const { token } = await Authentication.signToken({ username, email });
+        
+        res.status(201).json({ token })
     }
-});
-
-app.post('/v1/authenticate/verify', (req, res) => {
-    const { body = {} } = req;
-    const { token } = body;
-
-    if(token){
-        // userId
-        jwt.verify(token, process.env.TOKEN_SECRET, function(error, decodedToken) {
-            if(error){
-                res.status(401).json({
-                    error,
-                    message: 'Unable to verify token',
-                })
-            }
-
-            res.status(200).json(decodedToken)
-        });
-    } else {
-        res.status(401).json({
-            message: 'Invalid Token'
-        })
+    catch(error){
+        res.status(400).json({message: 'Failed to authenticate'})
     }
 });
 

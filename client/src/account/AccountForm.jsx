@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-
+import { useDispatch } from 'react-redux';
 import useCreateAccountForm from './hooks/create-account-form';
 
+import { createAccount } from './account-ducks';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
@@ -16,12 +17,22 @@ const ErrorMessage = styled.span`
 `;
 
 const AccountForm = ({gridArea}) => {
+    const dispatch = useDispatch();
+
     const {
         inputs,
         handleInputChange,
         handleSubmit,
         errors
-    } = useCreateAccountForm(() => {});
+    } = useCreateAccountForm(({username, email, password }) => {
+        dispatch(
+            createAccount({
+                username: username.value,
+                email: email.value,
+                password: password.value
+            })
+        );
+    });
 
     return (
         <>

@@ -62,7 +62,9 @@ const useCreateAccountForm = (callback) => {
             event.preventDefault();
         }
 
-        callback && callback();
+        // TODO: check if values !== '' AND check if any errors
+        // if values entered and no errors, then call the callback
+        callback && callback(inputs);
     }
 
     return {

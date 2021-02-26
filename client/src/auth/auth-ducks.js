@@ -1,5 +1,6 @@
 import axios from 'axios';
 import CookieUtils from '../utils/cookie-utils';
+import AuthService from './auth-service';
 
 import {
     IS_AUTHENTICATING,
@@ -11,6 +12,7 @@ const isAuthenticating = () => {
     return {
         type: IS_AUTHENTICATING,
         isAuthenticating: true,
+        authenticateOnLoadFailure: false,
     }
 }
 
@@ -31,11 +33,17 @@ const authenticateFailure = (errorMessage) => {
     }
 }
 
+const authenticateOnLoadFailure = () => {
+    return {
+        type: AUTHENTICATE_FAILURE,
+        authenticateOnLoadFailure: true,
+        isAuthenticating: false,
+    }
+}
+
 export const authenticateOnLoad = () => {
     return (dispatch) => {
-        const token = CookieUtils.getCookie('chat-app-token');
-        console.log({token})
-        return axios.post('http://localhost:3001/v1/authenticate/verify', { token })
+        return axios.post('http://localhost:3001/v1/authenticate/verify')
             .then((response) => {
                 const { data } = response
                 const { decodedToken } = data;
@@ -44,41 +52,33 @@ export const authenticateOnLoad = () => {
             },
             () => {
                 CookieUtils.removeCookie('chat-app-token');
-                dispatch(authenticateFailure());
+                dispatch(authenticateOnLoadFailure());
             });
     }
 };
 
 export const login = (email, password) => {
-    return (dispatch) => {
+    return async (dispatch) => {
         dispatch(isAuthenticating());
 
-        return axios.post('http://localhost:3001/v1/authenticate/create', { email, password})
-            .then((response) => {
-                const { data } = response
-                const { token } = data;
+        try{
+            const token = await AuthService.create(email, password);
 
-                return axios.post('http://localhost:3001/v1/authenticate/verify', { token })
-                    .then((response) => {
-                        const decodedToken = response?.data;
-                        CookieUtils.setCookie('chat-app-token', token)
-                        dispatch(authenticateSuccess(decodedToken));
-                    },
-                    (error) => {
-                        const errorMessage = error?.response?.data?.message;
-                        dispatch(authenticateFailure(errorMessage));
-                    });
-            },
-            (error) => {
-                const errorMessage = error?.response?.data?.message;
-                dispatch(authenticateFailure(errorMessage));
-            });
+            const userDetails = await AuthService.verify(token);
+            
+            dispatch(authenticateSuccess(userDetails));
+        }
+        catch(error){
+            const errorMessage = error?.response?.data?.message;
+            dispatch(authenticateFailure(errorMessage));
+        }
     }
 }
 
 const INITIAL_STATE = {
     isAuthenticated: false,
     isAuthenticating: false,
+    authenticateOnLoadFailure: false,
 };
 
 const authentication = (

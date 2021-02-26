@@ -69,8 +69,8 @@ const ErrorMessage = styled.span`
 const setErrorMessageDebounce = debounce((fn) => fn(), 800);
 
 const LoginForm = ({isAuthenticating, errorMessage, handleLogin, gridArea}) => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("myemail@email.com");
+    const [password, setPassword] = useState("mypass");
     const[ emailError, setEmailError] = useState('');
     const[ passwordError, setPasswordError] = useState('');
     const[ isPasswordDirty, setIsPasswordDirty] = useState(false);

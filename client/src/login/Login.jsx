@@ -1,12 +1,14 @@
 import React from "react";
 import { useDispatch, useSelector } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+
 import { login } from '../auth/auth-ducks';
+
 import {
   isAuthenticatingSelector,
   authenticateErrorSelector,
   isAuthenticatedSelector
 } from '../auth/selectors/auth-selectors';
-import { Redirect } from 'react-router-dom';
 
 import LoginForm from "./LoginForm";
 import Page from '../components/Page';

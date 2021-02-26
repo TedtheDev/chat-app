@@ -9,14 +9,12 @@ module.exports = (req, res) => {
         jwt.sign({ email }, process.env.TOKEN_SECRET, function(error, token) {
             if(error){
                 res.status(401).json({
-                    error,
                     message: 'Unable to sign token',
                 })
             }
 
-            res.status(201).json({
-                token,
-            })
+            res.cookie('chat-app-token', token, { domain: 'localhost', httpOnly: true, secure: true })
+            res.sendStatus(201);
         });
     } else {
         res.status(401).json({

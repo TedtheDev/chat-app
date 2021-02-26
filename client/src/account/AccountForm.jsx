@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
+
 import useCreateAccountForm from './hooks/create-account-form';
 
-import { createAccount } from './account-ducks';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
@@ -16,23 +15,14 @@ const ErrorMessage = styled.span`
     color: red;
 `;
 
-const AccountForm = ({gridArea}) => {
-    const dispatch = useDispatch();
+const AccountForm = ({ onSubmit, gridArea }) => {
 
     const {
         inputs,
         handleInputChange,
         handleSubmit,
         errors
-    } = useCreateAccountForm(({username, email, password }) => {
-        dispatch(
-            createAccount({
-                username: username.value,
-                email: email.value,
-                password: password.value
-            })
-        );
-    });
+    } = useCreateAccountForm(onSubmit);
 
     return (
         <>
@@ -70,7 +60,8 @@ const AccountForm = ({gridArea}) => {
 };
 
 AccountForm.propTypes = {
-    gridArea: PropTypes.string,
+    gridArea: PropTypes.string.isRequired,
+    onSubmit: PropTypes.func.isRequired,
 };
 
 export default AccountForm;

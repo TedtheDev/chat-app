@@ -1,7 +1,4 @@
 import axios from 'axios';
-import CookieUtils from '../utils/cookie-utils';
-
-import { login } from '../auth/auth-ducks';
 
 import { 
     CREATE_ACCOUNT_FAILURE,
@@ -40,7 +37,6 @@ export const createAccount = ({username, email, password}) => {
                 const { token } = response.data;
 
                 if(status === 201 && token){
-                    CookieUtils.setCookie('chat-app-token', token)
                     dispatch(createAccountSuccess());
                     
                     window.location.replace("http://localhost:3000/");

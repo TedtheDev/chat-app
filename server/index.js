@@ -26,7 +26,7 @@ const app = express();
 const PORT = process.env.SERVER_PORT || 3001;
 
 var corsOptions = {
-    origin: 'http://localhost:3000',
+    origin: ['https://chat-app.com:443', 'http://localhost:3000'],
     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
     credentials: true,
 }
@@ -60,6 +60,10 @@ app.post('/v1/account/create', async (req, res) => {
     catch(error){
         res.status(400).json({message: 'Failed to authenticate'})
     }
+});
+
+app.get('/ping', (req, res) => {
+    res.json({hello: 'there'})
 });
 
 app.get('*', (req, res) => {

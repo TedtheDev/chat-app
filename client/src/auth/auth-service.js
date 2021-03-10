@@ -1,7 +1,9 @@
 import axios from 'axios';
+import config from '../config/config';
 
+console.log(config, process.env)
 const authServiceInstance = axios.create({
-    baseURL: 'http://localhost:3001',
+    baseURL: config.apiServiceURL,
     withCredentials: true,
 });
 

@@ -13,7 +13,7 @@ module.exports = (req, res) => {
                 })
             }
 
-            res.cookie('chat-app-token', token, { domain: 'localhost', httpOnly: true, secure: true })
+            res.cookie('chat-app-token', token, { domain: 'localhost', sameSite: 'Strict', httpOnly: true, secure: true })
             res.sendStatus(201);
         });
     } else {

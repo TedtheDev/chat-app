@@ -43,7 +43,8 @@ const authenticateOnLoadFailure = () => {
 
 export const authenticateOnLoad = () => {
     return (dispatch) => {
-        return axios.post('http://localhost:3001/v1/authenticate/verify')
+        //TODO: create service to handle this route
+        return axios.post('https://api.chat-app.com:8443/v1/authenticate/verify')
             .then((response) => {
                 const { data } = response
                 const { decodedToken } = data;

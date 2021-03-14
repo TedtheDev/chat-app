@@ -1,6 +1,7 @@
 const CONFIG = { 
     development: {
-        apiServiceURL: 'http://api.chat-app.com:8080'
+        apiServiceURL: 'https://api.chat-app.com:8443',
+        domain: 'https://app.chat-app.com:3000'
     },
     production: {
         apiServiceURL: ''

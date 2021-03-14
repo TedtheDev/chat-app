@@ -1,6 +1,7 @@
 require('dotenv').config({ path: __dirname + '/.env' });
 const express = require('express');
 const cors = require('cors');
+
 const { graphqlHTTP } = require('express-graphql');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
@@ -26,7 +27,8 @@ const app = express();
 const PORT = process.env.SERVER_PORT || 3001;
 
 var corsOptions = {
-    origin: ['https://chat-app.com:443', 'http://localhost:3000'],
+    // origin: ['https://chat-app.com:443', 'https://chat-app.com:3000'],
+    origin: [ /\.chat-app\.com/ ],
     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
     credentials: true,
 }
@@ -66,8 +68,12 @@ app.get('/ping', (req, res) => {
     res.json({hello: 'there'})
 });
 
+app.get('/ping', (req, res) => {
+    res.status(404);
+});
+
 app.get('*', (req, res) => {
-    res.redirect('/');
+    res.send('OK');
 });
 
 app.listen(PORT, () => {

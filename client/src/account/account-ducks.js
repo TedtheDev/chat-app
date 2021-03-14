@@ -1,4 +1,5 @@
 import axios from 'axios';
+import config from '../config/config';
 
 import { 
     CREATE_ACCOUNT_FAILURE,
@@ -31,15 +32,15 @@ export const createAccount = ({username, email, password}) => {
 
         //api here
         // TODO: maybe reuse login function from auth ducks
-        axios.post('http://localhost:3001/v1/account/create', { username, email, password})
+        axios.post('https://api.chat-app.com:8443/v1/account/create', { username, email, password})
             .then((response) => {
                 const { status } = response;
                 const { token } = response.data;
 
                 if(status === 201 && token){
                     dispatch(createAccountSuccess());
-                    
-                    window.location.replace("http://localhost:3000/");
+
+                    window.location.replace(config.domain);
                 } else {
                     dispatch(createAccountFailure({message: 'Failed to create account'}))
                 }

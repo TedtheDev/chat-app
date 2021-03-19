@@ -6,6 +6,6 @@ AuthenticateRouter.route('/create')
     .post(require('./create'));
 
 AuthenticateRouter.route('/verify')
-    .post(require('./verify'));
+    .get(require('./verify'));
 
 module.exports = AuthenticateRouter;

@@ -68,12 +68,12 @@ app.get('/ping', (req, res) => {
     res.json({hello: 'there'})
 });
 
-app.get('/ping', (req, res) => {
-    res.status(404);
+app.get('/health', (req, res) => {
+    res.send('OK');
 });
 
 app.get('*', (req, res) => {
-    res.send('OK');
+    res.status(404);
 });
 
 app.listen(PORT, () => {

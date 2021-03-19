@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 
 module.exports = (req, res) => {
     const { 'chat-app-token': chatAppToken } = req.cookies
-    
+
     if(chatAppToken){
         jwt.verify(chatAppToken, process.env.TOKEN_SECRET, function(error, decodedToken) {
             if(error){
@@ -12,10 +12,10 @@ module.exports = (req, res) => {
             }
 
             const { iat, ...userDetails } = decodedToken;
-            res.status(200).json({ userDetails })
+            return res.status(200).json({ userDetails })
         });
     } else {
-        res.status(401).json({
+        return res.status(401).json({
             message: 'Invalid Token'
         })
     }

@@ -1,4 +1,3 @@
-import axios from 'axios';
 import CookieUtils from '../utils/cookie-utils';
 import AuthService from './auth-service';
 
@@ -33,28 +32,28 @@ const authenticateFailure = (errorMessage) => {
     }
 }
 
-const authenticateOnLoadFailure = () => {
+const authenticateOnLoadFailure = (errorMessage) => {
     return {
         type: AUTHENTICATE_FAILURE,
         authenticateOnLoadFailure: true,
         isAuthenticating: false,
+        errorMessage,
     }
 }
 
 export const authenticateOnLoad = () => {
-    return (dispatch) => {
+    return async (dispatch) => {
         //TODO: create service to handle this route
-        return axios.post('https://api.chat-app.com:8443/v1/authenticate/verify')
-            .then((response) => {
-                const { data } = response
-                const { decodedToken } = data;
-
-                dispatch(authenticateSuccess(decodedToken))
-            },
-            () => {
-                CookieUtils.removeCookie('chat-app-token');
-                dispatch(authenticateOnLoadFailure());
-            });
+        try {
+            const userDetails = await AuthService.verify();
+    
+            dispatch(authenticateSuccess(userDetails));
+        }
+        catch(error){
+            console.log(error?.response?.data?.message);
+            CookieUtils.removeCookie('chat-app-token');
+            dispatch(authenticateOnLoadFailure());
+        }
     }
 };
 
@@ -63,9 +62,9 @@ export const login = (email, password) => {
         dispatch(isAuthenticating());
 
         try{
-            const token = await AuthService.create(email, password);
+            await AuthService.create(email, password);
 
-            const userDetails = await AuthService.verify(token);
+            const userDetails = await AuthService.verify();
             
             dispatch(authenticateSuccess(userDetails));
         }

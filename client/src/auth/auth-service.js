@@ -1,7 +1,6 @@
 import axios from 'axios';
 import config from '../config/config';
 
-console.log(config, process.env)
 const authServiceInstance = axios.create({
     baseURL: config.apiServiceURL,
     withCredentials: true,
@@ -19,11 +18,8 @@ const create = async( email, password ) => {
         return token;
 }
 
-const verify = async(token) => {
-        const response = await authServiceInstance.post(
-            '/v1/authenticate/verify',
-            { token }
-        );
+const verify = async() => {
+        const response = await authServiceInstance.get('/v1/authenticate/verify');
                 
         const { data } = response;
         const { userDetails } = data;

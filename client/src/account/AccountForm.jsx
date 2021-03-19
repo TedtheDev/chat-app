@@ -15,13 +15,14 @@ const ErrorMessage = styled.span`
     color: red;
 `;
 
-const AccountForm = ({gridArea}) => {
+const AccountForm = ({ onSubmit, gridArea }) => {
+
     const {
         inputs,
         handleInputChange,
         handleSubmit,
         errors
-    } = useCreateAccountForm(() => {});
+    } = useCreateAccountForm(onSubmit);
 
     return (
         <>
@@ -59,7 +60,8 @@ const AccountForm = ({gridArea}) => {
 };
 
 AccountForm.propTypes = {
-    gridArea: PropTypes.string,
+    gridArea: PropTypes.string.isRequired,
+    onSubmit: PropTypes.func.isRequired,
 };
 
 export default AccountForm;

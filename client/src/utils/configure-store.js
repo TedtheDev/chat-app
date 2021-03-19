@@ -12,5 +12,5 @@ export default function configureStore(rootReducer, preloadedState) {
 
   const store = createStore(rootReducer, preloadedState, composedEnhancers)
 
-  return store
+  return store;
 }

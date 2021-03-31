@@ -8,6 +8,7 @@ module.exports = `
 
     type Query {
         users(id: String, username: String, password: String, email: String): [User]
+        user(id: String, username: String, password: String, email: String): User
         token(email: String!, password: String!): String
     }
 

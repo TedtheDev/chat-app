@@ -7,7 +7,7 @@ const signToken = async (info) => {
         }
         jwt.sign(info, process.env.TOKEN_SECRET, (err, token) => {
             if(err) reject('Error in signToken: cannot sign a token');
-            resolve({ token });
+            resolve(token);
         });
     });
 }

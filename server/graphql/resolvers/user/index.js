@@ -5,9 +5,10 @@ const authentication = require('../../../utils/authentication');
 module.exports =  {
   Query: {
     users: async (root, args = {}, context) => {
-        const token = context.headers.authorization.split('Bearer: ')[1];
-        console.log(token)
-        return authentication.verifyToken(token)
+        const { cookies } = context;
+        const chatAppToken = cookies['chat-app-token'];
+
+        return authentication.verifyToken(chatAppToken)
             .then((results) => {
                 if(results.success) {
                     const fields = ['id', 'username', 'password', 'email'];
@@ -20,6 +21,27 @@ module.exports =  {
                 }
 
                 return [];
+            })
+            .catch(err => err)
+    },
+    user: async (root, args = {}, context) => {
+        const { cookies } = context;
+        const chatAppToken = cookies['chat-app-token'];
+
+        return authentication.verifyToken(chatAppToken)
+            .then((results) => {
+                console.log({results})
+                if(results.success) {
+                    const fields = ['id', 'username', 'password', 'email'];
+                    return DB.select( '"Users"', fields, args)
+                        .then((results) => {
+                            console.log(results.rows)
+                            return results.rows[0];
+                        })
+                        .catch(err => err);
+                }
+
+                return {};
             })
             .catch(err => err)
     },

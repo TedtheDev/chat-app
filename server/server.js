@@ -12,15 +12,15 @@ const schema = require('./graphql/index');
 
 const Authentication = require('./utils/authentication');
 
-// Database.connection()
-//     .then( () => {
-//         console.log(`Database connected!`);
-//         Database.initTables();
-//     })
-//     .catch(err =>  {
-//         console.log(`Database connection error: ${err}`);
-//         process.exit(1);
-//     });
+Database.connection()
+    .then( () => {
+        console.log(`Database connected!`);
+        Database.initTables();
+    })
+    .catch(err =>  {
+        console.log(`Database connection error: ${err}`);
+        process.exit(1);
+    });
 
 const app = express();
 
@@ -54,7 +54,7 @@ app.post('/v1/account/create', async (req, res) => {
 
     // do stuff
     try{
-        const { token } = await Authentication.signToken({ username, email });
+        const token = await Authentication.signToken({ username, email });
         
         res.cookie('chat-app-token', token, { domain: 'localhost', httpOnly: true, secure: true })
         res.sendStatus(201);

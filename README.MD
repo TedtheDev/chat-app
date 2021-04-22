@@ -26,25 +26,45 @@ User {
     }
 }
 
-user table
+user table (composite key - username and email unless don't allow same usernames)
 - id
-- username
-- email
+- username k
+- email k
 - password
+- createDateTime
+
+friendship table (composite key requesterId and addresseeId )
+- requesterId (userId) k
+- addresseeId (userId) k
+
+friendshipStatus table
+- requesterId (userId) k
+- addresseeId (userId) k
+- specifiedDateTime (DATEIMT) k
+- statusCode
+- specifierId (userId taking the action)
+
+friendshipStatusCode
+- statusCode
+- name
 
 message table
-- id
-- group
-- sender
-- receiver
-- messageText
-- timestamp
+- id 
+- creator_id:
+- message_body
+- created_date
+- parent_message_id
 
-friends table
-- userId (id)
-- friendId (userId)
+message recipient table
+- <UPDATE>
 
-friends table
+user group table
+- <UPDATE>
+
+group table
+- <UPDATE>
+
+friendsship table
 user1 user2
 user1 user3
 user2 user1
@@ -52,43 +72,35 @@ user3 user1
 user3 user4
 user4 user3
 
-user to messages transaction table
-group 1 user1 user2 message1 timestamp
-group 1 user2 user1 message1 timestamp
-group2 user1 user2 message1 timestamp
-group2 user1 user3 message1 timestamp
-group2 user3 user1 message1 timestamp
-group2 user3 user2 message1 timestamp
+friendshipStatus Table
+user1 user2 1-01-2021 R user1
+user1 user2 1-02-2021 A user2
+user1 user2 1-04-2021 B user1
+user1 user2 1-10-2021 R user2
+user1 user2 1-11-2021 A user1
+
+friendShipStatusCode Table
+R Requested
+A Accepted
+B Blocked
+D Declined
 
 message
 messageid receiver
 message1 user1
 message1 user2
-
-
-
-User 0 - + Friends                GroupChat 0 - + Messages
-User 0 - + Messages               Message 1 - 1 User
-User 0 - + Group Chats            Message 1 - 1 Group Chat
-
-                                                                  
-                                   Friend
-                                     +                              
-                                     0                       
-                    Group Chat + 0  User                              
-                                     0                   
-                                     +
-                                  Message
                                      
 
-
 Phase 0
-- figure out database model
+- figure out database model - Friendship Model figured out
+- use updated sequelize syntax
 - figure out graphql schema
-- figure out graphql pattern normal graphql OR graphql tools
+- figure out graphql pattern normal graphql OR graphql tools - CHECKED
 - figure out page layouts/patterns
 
 Phase 1 Account/Profile Feature
+Login User - DONE
+Logout User
 Create User
 - create account
 Edit User Info

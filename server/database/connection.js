@@ -16,12 +16,14 @@ const pool = new Pool({
 });
 
 const connection =  () => {
+    console.log('Connection to database...')
     return new Promise((resolve, reject) => {
         pool.query(`SELECT NOW()`, (err, res) => {
             if(err) {
                 reject(err);
             }
             
+            console.log('Database connected!')
             resolve(res);
         });
     });

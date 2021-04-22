@@ -12,7 +12,7 @@ const Wrapper = styled.main`
     grid-area: ${({gridArea}) => gridArea ? gridArea : 'content'};
 `;
 
-const AccountDetails = ({ gridArea }) => {
+const ProfileDetails = ({ gridArea }) => {
     const authDetails = useSelector(authDetailsSelector);
 
     const { loading, error, data } = useQuery(
@@ -34,7 +34,7 @@ const AccountDetails = ({ gridArea }) => {
     )
 }
 
-AccountDetails.propTypes = {
+ProfileDetails.propTypes = {
     gridArea: PropTypes.string.isRequired,
 }
-export default AccountDetails;
+export default ProfileDetails;

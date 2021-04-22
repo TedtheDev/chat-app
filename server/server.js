@@ -10,17 +10,19 @@ const morgan = require('morgan');
 const Database = require('./database/index');
 const schema = require('./graphql/index');
 
-const Authentication = require('./utils/authentication');
+(async() => {
+    try {
+        await Database.connection();
+        
+        await Database.initTables();
 
-Database.connection()
-    .then( () => {
-        console.log(`Database connected!`);
-        Database.initTables();
-    })
-    .catch(err =>  {
+        await Database.loadInitialData();
+    } catch(err){
         console.log(`Database connection error: ${err}`);
         process.exit(1);
-    });
+    };
+})();
+
 
 const app = express();
 
@@ -47,22 +49,6 @@ app.use('/graphql',
         graphiql: true
     })
 );
-
-//TODO: graphql schema or it's own endpoint?
-app.post('/v1/account/create', async (req, res) => {
-    const { username, email, password } = req.body;
-
-    // do stuff
-    try{
-        const token = await Authentication.signToken({ username, email });
-        
-        res.cookie('chat-app-token', token, { domain: 'localhost', httpOnly: true, secure: true })
-        res.sendStatus(201);
-    }
-    catch(error){
-        res.status(400).json({message: 'Failed to authenticate'})
-    }
-});
 
 app.get('/ping', (req, res) => {
     res.json({hello: 'there'})

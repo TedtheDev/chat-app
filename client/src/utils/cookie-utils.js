@@ -19,7 +19,7 @@ const setCookie = (name, value) => {
 }
 
 const removeCookie = (name) => {
-    return Cookies.remove(name, { domain: config.cookieDomain });
+    return Cookies.remove(name, { domain: config.cookieDomain, sameSite: 'Lax', secure: true, httpOnly: true });
 }
 
 const CookieUtils = {

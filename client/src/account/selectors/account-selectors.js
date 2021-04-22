@@ -1,0 +1,1 @@
+export const isCreatingAccountSelector = (state) => state.account.isCreatingAccount;

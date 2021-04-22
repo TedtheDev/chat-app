@@ -5,6 +5,8 @@ import {
     IS_AUTHENTICATING,
     AUTHENTICATE_SUCCESS,
     AUTHENTICATE_FAILURE,
+    IS_LOGGING_OUT,
+    IS_LOGGING_OUT_SUCCESS,
 } from './auth-types';
 
 const isAuthenticating = () => {
@@ -12,6 +14,18 @@ const isAuthenticating = () => {
         type: IS_AUTHENTICATING,
         isAuthenticating: true,
         authenticateOnLoadFailure: false,
+    }
+}
+
+const isLoggingOut = () => {
+    return {
+        type: IS_LOGGING_OUT
+    }
+}
+
+const isLoggingOutSuccess = () => {
+    return {
+        type: IS_LOGGING_OUT_SUCCESS,
     }
 }
 
@@ -43,14 +57,12 @@ const authenticateOnLoadFailure = (errorMessage) => {
 
 export const authenticateOnLoad = () => {
     return async (dispatch) => {
-        //TODO: create service to handle this route
         try {
             const userDetails = await AuthService.verify();
     
             dispatch(authenticateSuccess(userDetails));
         }
         catch(error){
-            console.log(error?.response?.data?.message);
             CookieUtils.removeCookie('chat-app-token');
             dispatch(authenticateOnLoadFailure());
         }
@@ -75,10 +87,21 @@ export const login = (email, password) => {
     }
 }
 
+export const logout = () => {
+    return (dispatch) => {
+        dispatch(isLoggingOut());
+
+        const results = CookieUtils.removeCookie('chat-app-token');
+        console.log({results})
+        dispatch(isLoggingOutSuccess());
+    }
+}
+
 const INITIAL_STATE = {
     isAuthenticated: false,
     isAuthenticating: false,
     authenticateOnLoadFailure: false,
+    isLoggingOut: false,
 };
 
 const authentication = (
@@ -97,6 +120,10 @@ const authentication = (
             return { ...state, authDetails, isAuthenticating, isAuthenticated};
         case AUTHENTICATE_FAILURE:
             return {...state, errorMessage, isAuthenticating};
+        case IS_LOGGING_OUT:
+            return {...state, isLoggingOut: true };
+        case IS_LOGGING_OUT_SUCCESS:
+            return {...state, isLoggingOut: false, isAuthenticated: false, authDetails: null };
         default:
             return state;
     }

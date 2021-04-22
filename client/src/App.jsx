@@ -11,6 +11,7 @@ import { authenticateOnLoad } from './auth/auth-ducks';
 import ProtectedRoute from './components/ProtectedRoute';
 import Login from "./login/Login";
 import Account from './account/Account';
+import Profile from './account/Profile';
 import Home from './home/Home';
 import config from './config/config';
 
@@ -31,15 +32,18 @@ const App = () => {
         <Provider store={store}>
             <Router>
               <Switch>
-                <ProtectedRoute exact path="/">
-                  <Home />
-                </ProtectedRoute>
                 <Route exact path="/account">
                   <Account />
                 </Route>
                 <Route exact path="/login">
                   <Login />
                 </Route>
+                <ProtectedRoute exact path="/">
+                  <Home />
+                </ProtectedRoute>
+                <ProtectedRoute exact path="/profile">
+                  <Profile />
+                </ProtectedRoute>
               </Switch>
             </Router>
           </Provider>

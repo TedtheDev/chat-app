@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { useDispatch, useSelector } from 'react-redux';
 
-import { authenticateOnLoad } from '../auth/auth-ducks';
+import { authenticateOnLoad, logout } from '../auth/auth-ducks';
 import { authenticateOnLoadFailureSelector } from '../auth/selectors/auth-selectors';
 
 import HomeContent from './HomeContent';
@@ -31,14 +31,13 @@ const Home = () => {
         }
     }, [dispatch, authenticateOnLoadFailure])
 
-    // on mount, verify token
-    // grab token from cookie
-    // hit api to verify if token is valid
-    // if valid, show home
-    // if not valid, redirect to login
+    const handleLogout = () => {
+        dispatch(logout())
+    };
+
     return (
         <Div>
-            <Header gridArea="header"/>
+            <Header handleLogout={handleLogout} gridArea="header"/>
             <HomeContent gridArea="content" />
         </Div>
     )

@@ -8,7 +8,7 @@ const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 
 const Database = require('./database/index');
-const schema = require('./graphql/index');
+const { schema, graphQLToolsSchema } = require('./graphql/index');
 
 (async() => {
     try {

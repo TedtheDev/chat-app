@@ -10,7 +10,7 @@ const FriendshipStatusCodeSchema = (sequelize) => FriendshipStatusCode.init({
       allowNull: false,
       primaryKey: true,
     },
-    addresseeId: {
+    description: {
         type: Sequelize.STRING,
         allowNull: false,
         primaryKey: false,

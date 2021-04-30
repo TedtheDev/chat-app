@@ -90,12 +90,29 @@ messageid receiver
 message1 user1
 message1 user2
                                      
-
+GraphQL queries/mutations
+- Queries
+- - user
+- - users
+- - messages
+- - friendships
+- Mutations
+- - adduser
+- - editUser
+- - deleteUser
+- - addMessage
+- - editMessage???
+- - deleteMessage
+- - createFriendship
+- - editFriendship
+- - deleteFriendship
+- - 
 Phase 0
-- figure out database model - Friendship Model figured out
+- figure out database model - add user groups to database schema
+- update models to use camelCase, set field to camelCase and then set field attribute on field to database field, set model underscored: true https://stackoverflow.com/questions/18858337/sequelize-use-camel-case-in-js-but-underscores-in-table-names
 - use updated sequelize syntax
 - figure out graphql schema
-- figure out graphql pattern normal graphql OR graphql tools - CHECKED
+- figure out graphql pattern normal graphql OR graphql tools - COMPLETE
 - figure out page layouts/patterns
 
 Phase 1 Account/Profile Feature

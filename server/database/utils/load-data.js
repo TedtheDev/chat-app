@@ -7,21 +7,22 @@ const {
     MessageSchema,
     MessageRecipientSchema,
 } = require('../schema/models');
-// const users = require('../load-data/users');
-// const messages = require('../load-data/messages');
-// const messageRecipients = require('../load-data/message-recipients');
+
 const {
     users,
     messages,
-    messageRecipients
+    messageRecipients,
+    friendships,
+    friendshipStatuses,
+    friendshipStatusCodes,
 } = require('../load-data');
 
 const initModels = (sequelize) => {
     return {
         User: UserSchema(sequelize),
-        // Friendship: FriendshipSchema(sequelize),
-        // FriendshipStatus: FriendshipStatusSchema(sequelize),
-        // FriendshipStatusCode: FriendshipStatusCodeSchema(sequelize),
+        Friendship: FriendshipSchema(sequelize),
+        FriendshipStatus: FriendshipStatusSchema(sequelize),
+        FriendshipStatusCode: FriendshipStatusCodeSchema(sequelize),
         Message: MessageSchema(sequelize),
         MessageRecipient: MessageRecipientSchema(sequelize),
     }
@@ -33,12 +34,15 @@ const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, proces
 });
 
 const loadData = async () => {
-    const { User, Message, MessageRecipient } = initModels(sequelize);
+    const { User, Message, MessageRecipient, Friendship, FriendshipStatus, FriendshipStatusCode } = initModels(sequelize);
 
     try{
-        await users.forEach(async (user) => await User.create({...user}));
-        await messages.forEach(async (message) => await Message.create({...message}));
-        await messageRecipients.forEach(async (messageRecipient) => await MessageRecipient.create({...messageRecipient}));
+        users.forEach(async (user) => await User.create({...user}));
+        messages.forEach(async (message) => await Message.create({...message}));
+        messageRecipients.forEach(async (messageRecipient) => await MessageRecipient.create({...messageRecipient}));
+        friendships.forEach(async (friendship) => await Friendship.create({...friendship}));
+        friendshipStatuses.forEach(async (friendshipStatus) => await FriendshipStatus.create({...friendshipStatus}));
+        friendshipStatusCodes.forEach(async (friendshipStatusCode) => await FriendshipStatusCode.create({...friendshipStatusCode}));
     }
     catch(err){
         console.log(err)

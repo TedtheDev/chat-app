@@ -5,20 +5,26 @@ class FriendshipStatus extends Model {};
 
 const FriendshipStatusSchema = (sequelize) => FriendshipStatus.init({
     // attributes
-    requesterId: {
+    id: {
       type: Sequelize.INTEGER,
       allowNull: false,
       primaryKey: true,
+      autoIncrement: true
+    },
+    requesterId: {
+      type: Sequelize.INTEGER,
+      allowNull: false,
+      // unique: "friendshipStatusId",
     },
     addresseeId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        primaryKey: true,
+        // unique: "friendshipStatusId",
     },
     specifiedDateTime: {
         type: Sequelize.DATE,
         allowNull: false,
-        primaryKey: true,
+        // unique: "friendshipStatusId",
     },
     statusCode: {
         type: Sequelize.STRING,

@@ -1,0 +1,20 @@
+module.exports = `
+    type User {
+        id: String
+        username: String
+        password: String
+        email: String
+    }
+
+    type Query {
+        friends(id: String, username: String, password: String, email: String): [User]
+        user(id: String, username: String, password: String, email: String): User
+        token(email: String!, password: String!): String
+    }
+
+    type Mutation {
+        addUser(username: String!, password: String!, email: String!): User
+        editUser(id: String!, username: String, password: String, email: String): User
+        deleteUser(id: String!): User
+    }
+`;

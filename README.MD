@@ -18,7 +18,7 @@ User {
         users
         messages {
             message {
-                timestamp
+                timestamp♠
                 user
                 messageText
             }
@@ -79,7 +79,7 @@ user1 user2 1-04-2021 B user1
 user1 user2 1-10-2021 R user2
 user1 user2 1-11-2021 A user1
 
-friendShipStatusCode Table
+friendShipStatusCode Table♣
 R Requested
 A Accepted
 B Blocked
@@ -97,15 +97,15 @@ GraphQL queries/mutations
 - - messages
 - - friendships
 - Mutations
-- - adduser
-- - editUser
-- - deleteUser
-- - addMessage
-- - editMessage???
-- - deleteMessage
+- - adduser - check
+- - editUser - check
+- - deleteUser - check
 - - createFriendship
 - - editFriendship
 - - deleteFriendship
+- - addMessage
+- - editMessage???
+- - deleteMessage
 - - 
 Phase 0
 - figure out database model - add user groups to database schema
@@ -145,3 +145,11 @@ Additional Features
 - store avatars/pictures
 - audio
 - video
+
+
+tech debt
+- rip out graphql tools
+- clean up sequelize models
+- - primary key or unique key issues
+- - add underscore fields? is it useful?
+- - add associations

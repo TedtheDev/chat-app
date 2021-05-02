@@ -21,7 +21,7 @@ const sequelize = new Sequelize(
 const initTables = (tables) => {
   const promises = () => {
     return tables.map((table) => {
-      table.drop();
+      // table.drop();
       return table.sync({force: true, alter: true});
     });
   }

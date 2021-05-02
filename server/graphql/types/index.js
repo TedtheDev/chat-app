@@ -1,5 +1,5 @@
 const { mergeTypeDefs  } = require('graphql-tools');
-const User = require('./user/index');
+const User = require('./user/graphql-tools-types');
 
 const typeDefs = [User];
 

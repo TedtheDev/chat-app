@@ -1,4 +1,5 @@
 const FriendshipsModel = require('../../../database/schema/friendship');
+const FriendshipsStatusModel = require('../../../database/schema/friendship-status');
 const UserModel = require('../../../database/schema/user');
 const { sequelize } = require('../../../database');
 

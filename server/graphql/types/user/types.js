@@ -1,12 +1,13 @@
 const graphql = require('graphql');
-const { getUserResolver } = require('../../resolvers/user/get-user');
-const { getFriendsResolver } = require('../../resolvers/user/get-friends');
+const { getUserResolver } = require('../../resolvers/user/get-user-resolver');
+const { getFriendsResolver } = require('../../resolvers/user/get-friends-resolver');
+
+const { FriendshipListType } = require('../friendship');
 
 const {
     GraphQLObjectType,
     GraphQLString,
     GraphQLInt,
-    GraphQLList,
 } = graphql;
 
 const UserType = new GraphQLObjectType({
@@ -16,10 +17,7 @@ const UserType = new GraphQLObjectType({
         username: { type: GraphQLString },
         password: { type: GraphQLString },
         email: { type: GraphQLString },
-        friends: {
-            type: new GraphQLList(UserType),
-            resolve: getFriendsResolver,
-        }
+        friends: FriendshipListType,
     })
 });
 
@@ -41,5 +39,5 @@ const RootQueryType = new GraphQLObjectType({
 
 module.exports = {
     UserType,
-    RootQueryType
+    RootQueryType,
 };

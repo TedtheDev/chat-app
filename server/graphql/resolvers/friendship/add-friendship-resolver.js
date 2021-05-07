@@ -28,6 +28,4 @@ const addFriendshipResolver = async (parentValue, args) => {
     }
 };
 
-module.exports = {
-    addFriendshipResolver,
-}
+module.exports = addFriendshipResolver;

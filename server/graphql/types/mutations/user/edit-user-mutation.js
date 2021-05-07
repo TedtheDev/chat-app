@@ -1,11 +1,11 @@
-const { editUserResolver } = require('../../../resolvers/user/edit-user-resolver');
+const { editUserResolver } = require('../../../resolvers');
 const {
     GraphQLString,
     GraphQLNonNull,
     GraphQLInt
 } = require('graphql');
 
-const { UserType } = require('../../user/types');
+const { UserType } = require('../../user');
 
 module.exports = {
     type: UserType,

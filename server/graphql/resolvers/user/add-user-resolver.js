@@ -22,6 +22,4 @@ const addUserResolver = async (parentValue, args) => {
     }
 };
 
-module.exports = {
-    addUserResolver,
-}
+module.exports = addUserResolver;

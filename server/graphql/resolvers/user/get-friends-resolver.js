@@ -40,6 +40,4 @@ const getFriendsResolver = async (parentValue, args) => {
     }
 }
 
-module.exports = {
-    getFriendsResolver,
-}
+module.exports = getFriendsResolver;

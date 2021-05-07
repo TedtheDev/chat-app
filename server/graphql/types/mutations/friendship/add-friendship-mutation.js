@@ -1,11 +1,11 @@
-const { addFriendshipResolver } = require('../../../resolvers/friendship/add-friendship-resolver');
+const { addFriendshipResolver } = require('../../../resolvers');
 const {
     GraphQLString,
     GraphQLInt,
     GraphQLNonNull,
 } = require('graphql');
 
-const { UserType } = require('../../user/types');
+const { UserType } = require('../../user');
 
 module.exports = {
     type: UserType,

@@ -18,6 +18,4 @@ const getUserResolver = async (parentValue, args) => {
     }
 };
 
-module.exports = {
-    getUserResolver,
-}
+module.exports = getUserResolver;

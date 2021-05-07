@@ -17,6 +17,4 @@ const deleteUserResolver = async (parentValue, {id}) => {
     }
 };
 
-module.exports = {
-    deleteUserResolver,
-}
+module.exports = deleteUserResolver;

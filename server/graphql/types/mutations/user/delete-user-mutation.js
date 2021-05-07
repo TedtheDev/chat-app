@@ -1,4 +1,4 @@
-const { deleteUserResolver } = require('../../../resolvers/user/delete-user-resolver');
+const { deleteUserResolver } = require('../../../resolvers');
 const {
     GraphQLInt,
     GraphQLNonNull,

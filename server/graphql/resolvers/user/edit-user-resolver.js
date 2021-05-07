@@ -26,6 +26,4 @@ const editUserResolver = async (parentValue, {id, ...args}) => {
     }
 };
 
-module.exports = {
-    editUserResolver,
-}
+module.exports = editUserResolver;

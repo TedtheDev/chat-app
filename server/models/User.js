@@ -1,1 +1,0 @@
-//TODO: create User mode, id, username, email, password

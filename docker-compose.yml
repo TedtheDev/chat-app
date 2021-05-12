@@ -15,7 +15,7 @@ services:
       - "DB_PORT=${DB_PORT}"
       - "DB_NAME=${DB_NAME}"
     volumes:
-      - ./server:/usr/src/app
+      - ./server/app:/usr/src/app/app
     depends_on:
       - chat-app-postgres
       # - chat-app-redis

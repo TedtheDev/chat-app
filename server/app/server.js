@@ -1,4 +1,4 @@
-require('dotenv').config({ path: __dirname + '/.env' });
+require('dotenv').config({ path: __dirname + '/../.env' });
 const express = require('express');
 const cors = require('cors');
 
@@ -11,6 +11,7 @@ const Database = require('./database/index');
 const schema = require('./graphql/index');
 
 (async() => {
+    console.log('waiting on database')
     try {
         await Database.connection();
         
@@ -24,6 +25,7 @@ const schema = require('./graphql/index');
 })();
 
 
+console.log('waiting on app stuff')
 const app = express();
 
 const PORT = process.env.SERVER_PORT || 3001;

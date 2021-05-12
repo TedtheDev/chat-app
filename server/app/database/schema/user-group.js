@@ -27,7 +27,6 @@ const UserGroupSchema = (sequelize) => UserGroup.init({
     // options
     sequelize,
     timestamps: true,
-    underscored: true,
   }
 );
 

@@ -1,27 +1,27 @@
 const messageRecipients = [
     {
-        recipient_id: 2,
-        recipient_group_id: null,
-        message_id: 1,
-        is_read: true
+        recipientId: 2,
+        recipientGroupId: null,
+        messageId: 1,
+        isRead: true
     },
     {
-        recipient_id: 1,
-        recipient_group_id: null,
-        message_id: 2,
-        is_read: true
+        recipientId: 1,
+        recipientGroupId: null,
+        messageId: 2,
+        isRead: true
     },
     {
-        recipient_id: 1,
-        recipient_group_id: null,
-        message_id: 3,
-        is_read: true
+        recipientId: 1,
+        recipientGroupId: null,
+        messageId: 3,
+        isRead: true
     },
     {
-        recipient_id: 2,
-        recipient_group_id: null,
-        message_id: 4,
-        is_read: false
+        recipientId: 2,
+        recipientGroupId: null,
+        messageId: 4,
+        isRead: false
     }
 ]
 

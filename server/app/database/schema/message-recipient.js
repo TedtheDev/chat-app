@@ -10,19 +10,19 @@ const MessageRecipientSchema = (sequelize) => MessageRecipient.init({
         primaryKey: true,
         autoIncrement: true
     },
-    recipient_id: {
+    recipientId: {
         type: Sequelize.INTEGER,
         allowNull: false,
     },
-    recipient_group_id: {
+    recipientGroupId: {
         type: Sequelize.INTEGER,
         allowNull: true,
     },
-    message_id: {
+    messageId: {
         type: Sequelize.INTEGER,
         allowNull: false,
     },
-    is_read: {
+    isRead: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
     }

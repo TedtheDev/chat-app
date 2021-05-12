@@ -10,19 +10,19 @@ const MessageSchema = (sequelize) => Message.init({
         primaryKey: true,
         autoIncrement: true
     },
-    creator_id: {
+    creatorId: {
         type: Sequelize.INTEGER,
         allowNull: false,
     },
-    message_body: {
+    messageBody: {
         type: Sequelize.STRING,
         allowNull: false,
     },
-    created_date: {
+    createdDate: {
         type: Sequelize.DATE,
         allowNull: false,
     },
-    parent_message_id: {
+    parentMessageId: {
         type: Sequelize.INTEGER,
         allowNull: true,
     },

@@ -7,6 +7,9 @@ const FriendshipStatusCodeSchema = require('./friendship-status-code');
 const MessageSchema = require('./message');
 const MessageRecipientSchema = require('./message-recipient');
 
+const UserGroupSchema = require('./user-group');
+const GroupSchema = require('./group');
+
 module.exports = {
     UserSchema,
     FriendshipSchema,
@@ -14,4 +17,6 @@ module.exports = {
     FriendshipStatusCodeSchema,
     MessageSchema,
     MessageRecipientSchema,
+    UserGroupSchema,
+    GroupSchema,
 }

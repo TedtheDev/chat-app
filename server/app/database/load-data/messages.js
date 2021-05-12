@@ -2,28 +2,28 @@ const faker = require('faker');
 
 const messages = [
     {
-        creator_id: 1,
-        message_body: faker.lorem.words(),
-        created_date: faker.date.past(),
-        parent_message_id: null
+        creatorId: 1,
+        messageBody: faker.lorem.words(),
+        createdDate: faker.date.past(),
+        parentMessageId: null
     },
     {
-        creator_id: 2,
-        message_body: faker.lorem.words(),
-        created_date: faker.date.past(),
-        parent_message_id: null
+        creatorId: 2,
+        messageBody: faker.lorem.words(),
+        createdDate: faker.date.past(),
+        parentMessageId: null
     },
     {
-        creator_id: 2,
-        message_body: faker.lorem.words(),
-        created_date: faker.date.past(),
-        parent_message_id: null
+        creatorId: 2,
+        messageBody: faker.lorem.words(),
+        createdDate: faker.date.past(),
+        parentMessageId: null
     },
     {
-        creator_id: 1,
-        message_body: faker.lorem.words(),
-        created_date: faker.date.past(),
-        parent_message_id: null
+        creatorId: 1,
+        messageBody: faker.lorem.words(),
+        createdDate: faker.date.past(),
+        parentMessageId: null
     }
 ]
 

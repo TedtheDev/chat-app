@@ -6,6 +6,8 @@ const {
   FriendshipStatusCodeSchema,
   MessageSchema,
   MessageRecipientSchema,
+  UserGroupSchema,
+  GroupSchema,
 } = require('../schema/models');
 
 const sequelize = new Sequelize(
@@ -52,6 +54,8 @@ const initializeDatabase = async () => {
       FriendshipStatusCodeSchema(sequelize),
       MessageSchema(sequelize),
       MessageRecipientSchema(sequelize),
+      UserGroupSchema(sequelize),
+      GroupSchema(sequelize),
     ]);
     
   } catch(err){

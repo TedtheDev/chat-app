@@ -23,7 +23,6 @@ const GroupSchema = (sequelize) => Group.init({
     // options
     sequelize,
     timestamps: true,
-    underscored: true,
   }
 );
 

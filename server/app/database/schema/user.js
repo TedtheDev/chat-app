@@ -27,7 +27,6 @@ const UserSchema = (sequelize) => User.init({
     // options
     sequelize,
     timestamps: true,
-    underscored: true,
   }
 );
 

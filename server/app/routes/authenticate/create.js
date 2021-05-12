@@ -25,7 +25,6 @@ module.exports = async (req, res) => {
             console.log('yooooo invalid pass')
             throw new Error('Password Comparison: password incorrect');
         }
-        
     }
     catch(err){
         res.status(401).json({

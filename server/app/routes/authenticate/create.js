@@ -22,7 +22,6 @@ module.exports = async (req, res) => {
             res.cookie('chat-app-token', signedToken, { domain: 'chat-app.com', sameSite: 'Lax', httpOnly: true, secure: true })
             res.sendStatus(201);
         } else {
-            console.log('yooooo invalid pass')
             throw new Error('Password Comparison: password incorrect');
         }
     }

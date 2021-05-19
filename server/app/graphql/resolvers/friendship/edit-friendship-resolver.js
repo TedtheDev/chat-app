@@ -2,9 +2,9 @@ const FriendshipModel = require('../../../database/schema/friendship');
 const FriendshipStatusModel = require('../../../database/schema/friendship-status');
 const { sequelize } = require('../../../database');
 
-const addFriendshipResolver = async ( 
+const editFriendshipResolver = async ( 
     parentValue,
-    { requesterId, addresseeId, actionUserId, status }
+    { requesterId, addresseeId, actionUserId, statusCode }
 ) => {
     const friendshipModel = FriendshipModel(sequelize);
     const friendshipStatusModel = FriendshipStatusModel(sequelize);
@@ -17,9 +17,10 @@ const addFriendshipResolver = async (
     };
 
     try {
-        if(!STATUS_MAP[status]){
-            throw new Error(`Status can be of type A, D, or B: ${status}`)
+        if(!STATUS_MAP[statusCode]){
+            throw new Error(`statusCode error: can only be of type R, A, D, or B - statusCode ${statusCode}`)
         }
+        console.log('yoooo')
         await friendshipModel.create({
             requesterId,
             addresseeId,
@@ -29,7 +30,7 @@ const addFriendshipResolver = async (
             requesterId,
             addresseeId,
             specifiedDateTime: new Date(),
-            statusCode: status,
+            statusCode,
             specifierId: actionUserId,
         });
 
@@ -40,4 +41,4 @@ const addFriendshipResolver = async (
     }
 };
 
-module.exports = addFriendshipResolver;
+module.exports = editFriendshipResolver;

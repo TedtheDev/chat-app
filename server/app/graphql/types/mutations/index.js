@@ -8,6 +8,7 @@ const searchUserMutation = require('./user/search-user-mutation');
 
 // friendship mutations
 const addFriendshipMutation = require('./friendship/add-friendship-mutation');
+const editFriendshipMutation = require('./friendship/edit-friendship-mutation');
 
 const mutation = new GraphQLObjectType({
     name: 'Mutation',
@@ -17,6 +18,7 @@ const mutation = new GraphQLObjectType({
         deleteUser: deleteUserMutation,
         addFriendship: addFriendshipMutation,
         searchUser: searchUserMutation,
+        editFriendship: editFriendshipMutation,
     }
 });
 

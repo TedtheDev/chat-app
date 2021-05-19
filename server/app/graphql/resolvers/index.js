@@ -8,6 +8,7 @@ const searchUserResolver = require('./user/search-user-resolver');
 
 // Friendship Resolvers
 const addFriendshipResolver = require('./friendship/add-friendship-resolver');
+const editFriendshipResolver = require('./friendship/edit-friendship-resolver');
 
 module.exports = {
     addUserResolver,
@@ -17,4 +18,5 @@ module.exports = {
     getUserResolver,
     searchUserResolver,
     addFriendshipResolver,
+    editFriendshipResolver,
 };

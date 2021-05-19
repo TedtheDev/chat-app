@@ -1,4 +1,4 @@
-const { addFriendshipResolver } = require('../../../resolvers');
+const { editFriendshipResolver } = require('../../../resolvers');
 const {
     GraphQLInt,
     GraphQLNonNull,
@@ -13,5 +13,5 @@ module.exports = {
         addresseeId: { type: new GraphQLNonNull(GraphQLInt) },
         actionUserId: { type: new GraphQLNonNull(GraphQLInt) }, // specifierId
     },
-    resolve: addFriendshipResolver,
+    resolve: editFriendshipResolver,
 };

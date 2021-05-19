@@ -100,9 +100,10 @@ GraphQL queries/mutations
 - - adduser - check
 - - editUser - check
 - - deleteUser - check
-- - createFriendship
-- - editFriendship
-- - deleteFriendship
+- - searchUser - check
+- - addFriendship - check DO WE WANT THIS? Just reuse edit friendship?
+- - editFriendship - check
+- - deleteFriendship ?
 - - addMessage
 - - editMessage???
 - - deleteMessage

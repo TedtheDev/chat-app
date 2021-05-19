@@ -4,6 +4,8 @@ const messageRecipients = require('./message-recipients');
 const friendships = require('./friendships');
 const friendshipStatuses = require('./friendship-statuses');
 const friendshipStatusCodes = require('./friendship-status-codes');
+const userGroups = require('./user-groups');
+const groups = require('./groups');
 
 module.exports = {
     users,
@@ -12,4 +14,6 @@ module.exports = {
     friendships,
     friendshipStatuses,
     friendshipStatusCodes,
+    userGroups,
+    groups,
 }

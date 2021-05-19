@@ -22,7 +22,26 @@ const messageRecipients = [
         recipientGroupId: null,
         messageId: 4,
         isRead: false
-    }
+    },
+    // group messages
+    {
+        recipientId: 1,
+        recipientGroupId: 1,
+        messageId: 5,
+        isRead: false
+    },
+    {
+        recipientId: 2,
+        recipientGroupId: 1,
+        messageId: 6,
+        isRead: false
+    },
+    {
+        recipientId: 3,
+        recipientGroupId: 1,
+        messageId: 7,
+        isRead: false
+    },
 ]
 
 module.exports = messageRecipients;

@@ -16,7 +16,7 @@ const GroupSchema = (sequelize) => Group.init({
       allowNull: false
     },
     isActive: {
-      type: Sequelize.STRING,
+      type: Sequelize.BOOLEAN,
       allowNull: false
     }
   }, {

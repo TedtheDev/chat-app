@@ -6,6 +6,8 @@ const {
     FriendshipStatusCodeSchema,
     MessageSchema,
     MessageRecipientSchema,
+    UserGroupSchema,
+    GroupSchema
 } = require('../schema/models');
 
 const {
@@ -15,6 +17,8 @@ const {
     friendships,
     friendshipStatuses,
     friendshipStatusCodes,
+    userGroups,
+    groups,
 } = require('../load-data');
 
 const initModels = (sequelize) => {
@@ -25,6 +29,8 @@ const initModels = (sequelize) => {
         FriendshipStatusCode: FriendshipStatusCodeSchema(sequelize),
         Message: MessageSchema(sequelize),
         MessageRecipient: MessageRecipientSchema(sequelize),
+        UserGroup: UserGroupSchema(sequelize),
+        Group: GroupSchema(sequelize),
     }
 };
 
@@ -34,7 +40,7 @@ const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, proces
 });
 
 const loadData = async () => {
-    const { User, Message, MessageRecipient, Friendship, FriendshipStatus, FriendshipStatusCode } = initModels(sequelize);
+    const { User, Message, MessageRecipient, Friendship, FriendshipStatus, FriendshipStatusCode, UserGroup, Group } = initModels(sequelize);
 
     try{
         users.forEach(async (user) => await User.create({...user}));
@@ -43,6 +49,8 @@ const loadData = async () => {
         friendships.forEach(async (friendship) => await Friendship.create({...friendship}));
         friendshipStatuses.forEach(async (friendshipStatus) => await FriendshipStatus.create({...friendshipStatus}));
         friendshipStatusCodes.forEach(async (friendshipStatusCode) => await FriendshipStatusCode.create({...friendshipStatusCode}));
+        userGroups.forEach(async (userGroup) => await UserGroup.create({...userGroup}));
+        groups.forEach(async (group) => await Group.create({...group}));
     }
     catch(err){
         console.log(err)

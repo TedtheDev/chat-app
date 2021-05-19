@@ -108,7 +108,7 @@ GraphQL queries/mutations
 - - deleteMessage
 - - 
 Phase 0
-- figure out database model - add user groups to database schema
+- figure out database model - add group message data to message recipients table
 - update models to use camelCase, set field to camelCase and then set field attribute on field to database field, set model underscored: true https://stackoverflow.com/questions/18858337/sequelize-use-camel-case-in-js-but-underscores-in-table-names
 - use updated sequelize syntax
 - figure out graphql schema
